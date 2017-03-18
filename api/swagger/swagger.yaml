@@ -1,0 +1,225 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: EpicLand API
+  description: A fitness API that provides workout routines and related nutrition information.
+  contact:
+    name: MPM FITNIT
+host: localhost:10010
+basePath: /
+schemes:
+  - http
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /exercises:
+    get:
+      description: returns all exercises
+      # used as the method name of the controller
+      operationId: getAllExercises
+      responses:
+        "200":
+          description: get array of all exercises
+  /exercises/{id}:
+    get:
+      description: Returns specific exercises using the body-group
+      operationId: findExerciseById
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: query
+          description: body-group ID of exercise to fetch
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: exercise response
+          schema:
+            $ref: '#/definitions/exercise'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /users:
+    post:
+      description: Creates a new user in the database. 
+      operationId: addNewUser
+      produces:
+        - application/json
+      parameters:
+        - name: first_name
+          in: body
+          description: Add user first name to the database
+          required: true
+          type: string
+          schema:
+            $ref: '#/definitions/newUser'
+        - name: last_name
+          in: body
+          description: Add user last name to the database
+          required: true
+          type: string
+          schema:
+            $ref: '#/definitions/newUser'
+        - name: email
+          in: body
+          description: Add user email to the database
+          required: true
+          type: string
+          schema:
+            $ref: '#/definitions/newUser'
+        - name: password
+          in: body
+          description: Add user password to the database
+          required: true
+          type: string
+          schema:
+            $ref: '#/definitions/newUser'
+        - name: weight
+          in: body
+          description: Add user weight
+          required: true
+          type: integer
+          format: int64
+          schema:
+            $ref: '#/definitions/newUser'
+      responses:
+        '200':
+          description: New user response
+          schema:
+            $ref: '#/definitions/newUser'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /users/{id}:
+    get:
+      description: Returns specific user information based on user.id only if user is authorized.
+      operationId: getUserById
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: query
+          description: ID of user to fetch
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: user-specific response
+          schema:
+            $ref: '#/definitions/user'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+    patch:
+      description: updates specified properties of the specific user.
+      operationId: patchUserProfile
+      produces:
+        -application/json
+      parameters:
+        - name: first_name
+          in: body
+          description: Insert specifiec data to update User in the database
+          required: false
+          type: string
+          schema:
+            $ref: '#/definitions/updateUser'
+      responses:
+        '200':
+          description: user-specific response
+          schema:
+            $ref: '#/definitions/updateUser'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+definitions:
+  exercise:
+    type: object
+    required:
+      - id
+      - name
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      description:
+        type: string
+      equipment_type:
+        type: string
+      bg_id:
+        type: integer
+        format: int64
+  user:
+    type: object
+    required:
+      - first_name
+      - last_name
+      - email
+      - password
+      - weight
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      weight:
+        type: integer
+  updateUser:
+    type: object
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      weight:
+        type: integer
+  newUser:
+    type: object
+    required:
+      - first_name
+      - last_name
+      - email
+      - password
+      - weight
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      weight:
+        type: integer
+  errorModel:
+    type: object
+    required:
+      - code
+      - message
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+
+  
