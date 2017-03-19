@@ -32,7 +32,7 @@ paths:
             $ref: '#/definitions/errorModel'
   /exercises/{id}:
     get:
-      description: Returns a specific exercise based on a single ID. 
+      description: Returns a specific exercise based on a single ID.
       operationId: findExerciseById
       produces:
         - application/json
@@ -42,7 +42,7 @@ paths:
           description: ID of exercise to fetch
           required: true
           type: integer
-          format: int64
+          format: int32
       responses:
         '200':
           description: exercise response
@@ -54,7 +54,7 @@ paths:
             $ref: '#/definitions/errorModel'
   /users:
     post:
-      description: Creates a new user in the database 
+      description: Creates a new user in the database
       operationId: addNewUser
       produces:
         - application/json
@@ -76,7 +76,7 @@ paths:
             $ref: '#/definitions/errorModel'
   /users/{id}:
     get:
-      description: Returns a user information based on a single ID. The user must be authorized to access.  
+      description: Returns a user information based on a single ID. The user must be authorized to access.
       operationId: getUserById
       produces:
         - application/json
@@ -102,18 +102,77 @@ paths:
       produces:
         - application/json
       parameters:
-        - name: user profile
+        - name: id
+          in: path
+          description: ID of specified user
+          required: true
+          type: integer
+          format: int64
+        - name: jsonPatch
           in: body
-          description: Insert specifiec data to update User in the database
-          required: false
-          type: string
+          required: true
           schema:
             $ref: '#/definitions/updateUser'
       responses:
         '200':
-          description: user-specific response
+          description: user profile response
           schema:
-            $ref: '#/definitions/updateUser'
+            $ref: '#/definitions/user'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+    delete:
+      description: deletes a single user from the database.
+      operationId: deleterUser
+      parameters:
+        - name: id
+          in: path
+          description: ID of the user to delete
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '204':
+          description: user deleted
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /recipes:
+    get:
+      description: returns all recipes
+      # used as the method name of the controller
+      operationId: getAllRecipes
+      responses:
+        "200":
+          description: get array of all recipes
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/recipe'
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/errorModel'
+  /recipes/{id}:
+    get:
+      description: Returns specific recipes based on routine ID
+      operationId: getRecipeById
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: routine ID to fetch
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: recipe by routine ID response
+          schema:
+            $ref: '#/definitions/recipe'
         default:
           description: unexpected error
           schema:
@@ -170,7 +229,7 @@ definitions:
       - password
       - weight
     properties:
-      id: 
+      id:
         type: integer
         format: int32
       first_name:
@@ -186,6 +245,8 @@ definitions:
         format: int32
   updateUser:
     type: object
+    required:
+      - password
     properties:
       first_name:
         type: string
@@ -197,6 +258,25 @@ definitions:
         type: string
       weight:
         type: integer
+        format: int32
+  recipe:
+    type: object
+    required:
+      - id
+      - bgId
+      - title
+      - description
+    properties:
+      id:
+        type: integer
+        format: int32
+      bgId:
+        type: integer
+        format: int32
+      title:
+        type: string
+      description:
+        type: string
   errorModel:
     type: object
     required:
@@ -208,5 +288,3 @@ definitions:
         format: int32
       message:
         type: string
-
-  
