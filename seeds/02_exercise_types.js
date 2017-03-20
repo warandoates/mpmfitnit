@@ -6,7 +6,7 @@ exports.seed = knex => knex('exercise_types').del()
     },
     {
       id: 2,
-      name: 'Weightlifting'
+      name: 'Olympic Weightlifting'
     },
     {
       id: 3,
@@ -26,6 +26,6 @@ exports.seed = knex => knex('exercise_types').del()
     },
     {
       id: 7,
-      name: 'Strong'
+      name: 'Strongman'
     }
   ]));

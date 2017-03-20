@@ -10,7 +10,7 @@ exports.seed = knex => knex('equipment_types').del()
     },
     {
       id: 3,
-      name: 'Barbel'
+      name: 'Barbell'
     },
     {
       id: 4,
@@ -42,7 +42,7 @@ exports.seed = knex => knex('equipment_types').del()
     },
     {
       id: 11,
-      name: 'Curl Bar'
+      name: 'E-Z Curl Bar'
     },
     {
       id: 12,

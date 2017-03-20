@@ -8,6 +8,7 @@
   "license": "",
   "main": "app.js",
   "dependencies": {
+    "bookshelf": "^0.10.3",
     "express": "^4.12.3",
     "knex": "^0.12.8",
     "pg": "^6.1.4",
