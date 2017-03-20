@@ -13,8 +13,21 @@
   "license": "Unlicense",
   "private": true,
   "dependencies": {
+    "bookshelf": "^0.10.3",
+    "express": "^4.12.3",
+    "knex": "^0.12.8",
+    "pg": "^6.1.4",
+    "swagger-express-mw": "^0.1.0",
     "connect": "^3.2.0",
     "js-yaml": "^3.3.0",
     "swagger-tools": "0.10.1"
+  },
+  "devDependencies": {
+    "should": "^7.1.0",
+    "supertest": "^1.0.0"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "test": "swagger project test"
   }
 }
