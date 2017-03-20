@@ -9,6 +9,8 @@
   "main": "app.js",
   "dependencies": {
     "express": "^4.12.3",
+    "knex": "^0.12.8",
+    "pg": "^6.1.4",
     "swagger-express-mw": "^0.1.0"
   },
   "devDependencies": {
