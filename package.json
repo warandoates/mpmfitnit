@@ -1,18 +1,26 @@
 {
-  "name": "epiclandQ2",
-  "version": "0.0.1",
+  "name": "epicland-api",
+  "version": "1.0.0",
+  "description": "A fitness API that provides workout routines and related nutrition information.",
+  "main": "index.js",
+  "scripts": {
+	"prestart": "npm install",
+	"start": "node index.js"
+  },
+  "keywords": [
+    "swagger"
+  ],
+  "license": "Unlicense",
   "private": true,
-  "description": "New Swagger API Project",
-  "keywords": [],
-  "author": "",
-  "license": "",
-  "main": "app.js",
   "dependencies": {
     "bookshelf": "^0.10.3",
     "express": "^4.12.3",
     "knex": "^0.12.8",
     "pg": "^6.1.4",
-    "swagger-express-mw": "^0.1.0"
+    "swagger-express-mw": "^0.1.0",
+    "connect": "^3.2.0",
+    "js-yaml": "^3.3.0",
+    "swagger-tools": "0.10.1"
   },
   "devDependencies": {
     "should": "^7.1.0",
