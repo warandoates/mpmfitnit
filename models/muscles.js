@@ -1,0 +1,1 @@
+const bookshelf = require('../bookshelf');
