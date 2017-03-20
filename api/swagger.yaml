@@ -1,0 +1,301 @@
+---
+swagger: "2.0"
+info:
+  description: "A fitness API that provides workout routines and related nutrition\
+    \ information."
+  version: "1.0.0"
+  title: "EpicLand API"
+  contact:
+    name: "MPM FITNIT"
+host: "localhost:10010"
+basePath: "/"
+schemes:
+- "http"
+consumes:
+- "application/json"
+produces:
+- "application/json"
+paths:
+  /exercises:
+    get:
+      description: "returns all exercises"
+      operationId: "getAllExercises"
+      parameters: []
+      responses:
+        200:
+          description: "get array of all exercises"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/exercise"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/errorModel"
+      x-swagger-router-controller: "Default"
+  /exercises/{id}:
+    get:
+      description: "Returns a specific exercise based on a single ID."
+      operationId: "findExerciseById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of exercise to fetch"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        200:
+          description: "exercise response"
+          schema:
+            $ref: "#/definitions/exercise"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/errorModel"
+      x-swagger-router-controller: "Default"
+  /users:
+    post:
+      description: "Creates a new user in the database"
+      operationId: "addNewUser"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "newUser"
+        description: "new user to add to the database"
+        required: true
+        schema:
+          $ref: "#/definitions/newUser"
+      responses:
+        200:
+          description: "New user response"
+          schema:
+            $ref: "#/definitions/user"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/errorModel"
+      x-swagger-router-controller: "Default"
+  /users/{id}:
+    get:
+      description: "Returns a user information based on a single ID. The user must\
+        \ be authorized to access."
+      operationId: "getUserById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of the user to fetch"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "user-specific response"
+          schema:
+            $ref: "#/definitions/user"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/errorModel"
+      x-swagger-router-controller: "Default"
+    delete:
+      description: "deletes a single user from the database."
+      operationId: "deleterUser"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of the user to delete"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        204:
+          description: "user deleted"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/errorModel"
+      x-swagger-router-controller: "Default"
+    patch:
+      description: "updates specified properties of the specific user."
+      operationId: "patchUserProfile"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "ID of specified user"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "jsonPatch"
+        required: true
+        schema:
+          $ref: "#/definitions/updateUser"
+      responses:
+        200:
+          description: "user profile response"
+          schema:
+            $ref: "#/definitions/user"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/errorModel"
+      x-swagger-router-controller: "Default"
+  /recipes:
+    get:
+      description: "returns all recipes"
+      operationId: "getAllRecipes"
+      parameters: []
+      responses:
+        200:
+          description: "get array of all recipes"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/recipe"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/errorModel"
+      x-swagger-router-controller: "Default"
+  /recipes/{id}:
+    get:
+      description: "Returns specific recipes based on routine ID"
+      operationId: "getRecipeById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "routine ID to fetch"
+        required: true
+        type: "integer"
+        format: "int32"
+      responses:
+        200:
+          description: "recipe by routine ID response"
+          schema:
+            $ref: "#/definitions/recipe"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/errorModel"
+      x-swagger-router-controller: "Default"
+definitions:
+  exercise:
+    type: "object"
+    required:
+    - "bg_id"
+    - "description"
+    - "equipment_type"
+    - "id"
+    - "name"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      description:
+        type: "string"
+      equipment_type:
+        type: "string"
+      bg_id:
+        type: "integer"
+        format: "int64"
+  newUser:
+    type: "object"
+    required:
+    - "email"
+    - "first_name"
+    - "last_name"
+    - "password"
+    - "weight"
+    properties:
+      first_name:
+        type: "string"
+      last_name:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+      weight:
+        type: "integer"
+        format: "int32"
+  user:
+    type: "object"
+    required:
+    - "email"
+    - "first_name"
+    - "id"
+    - "last_name"
+    - "password"
+    - "weight"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      first_name:
+        type: "string"
+      last_name:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+      weight:
+        type: "integer"
+        format: "int32"
+  updateUser:
+    type: "object"
+    required:
+    - "password"
+    properties:
+      first_name:
+        type: "string"
+      last_name:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+      weight:
+        type: "integer"
+        format: "int32"
+  recipe:
+    type: "object"
+    required:
+    - "bgId"
+    - "description"
+    - "id"
+    - "title"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      bgId:
+        type: "integer"
+        format: "int32"
+      title:
+        type: "string"
+      description:
+        type: "string"
+  errorModel:
+    type: "object"
+    required:
+    - "code"
+    - "message"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      message:
+        type: "string"
