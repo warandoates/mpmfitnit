@@ -1,4 +1,5 @@
-exports.seed = knex => knex('muscles').del()
+exports.seed = knex => knex('exercises').del()
+  .finally(() => knex('muscles').del())
   .then(() => knex('muscles').insert([
     {
       id: 1,
@@ -78,7 +79,7 @@ exports.seed = knex => knex('muscles').del()
     },
     {
       id: 16,
-      name: 'Triceps ',
+      name: 'Triceps',
       size: ''
     },
     {
