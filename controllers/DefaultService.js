@@ -1,5 +1,5 @@
 'use strict';
-
+const Exercises = require('../models/exercises');
 exports.addNewUser = function(args, res, next) {
   /**
    * Creates a new user in the database
@@ -35,49 +35,41 @@ exports.deleterUser = function(args, res, next) {
 }
 
 exports.findExerciseById = function(args, res, next) {
+  console.log('Hello, ', args.id.value);
+  Exercises.where('id', args.id.value).fetch({ withRelated: ['muscle', 'type', 'equipment'] })
+  .then((specificExercise) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(specificExercise));
+  });
   /**
    * Returns a specific exercise based on a single ID.
    *
    * id Integer ID of exercise to fetch
    * returns exercise
    **/
-  var examples = {};
-  examples['application/json'] = {
-  "bg_id" : 123456789,
-  "name" : "aeiou",
-  "description" : "aeiou",
-  "id" : 123456789,
-  "equipment_type" : "aeiou"
+//   var examples = {};
+//   examples['application/json'] = {
+//   "bg_id" : 123456789,
+//   "name" : "aeiou",
+//   "description" : "aeiou",
+//   "id" : 123456789,
+//   "equipment_type" : "aeiou"
+// };
+//   if (Object.keys(examples).length > 0) {
+//     res.setHeader('Content-Type', 'application/json');
+//     res.end(JSON.stringify(examples[Object.keys(examples)[0]] || {}, null, 2));
+//   } else {
+//     res.end();
+//   }
 };
-  if (Object.keys(examples).length > 0) {
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(examples[Object.keys(examples)[0]] || {}, null, 2));
-  } else {
-    res.end();
-  }
-}
 
 exports.getAllExercises = function(args, res, next) {
-  /**
-   * returns all exercises
-   *
-   * returns List
-   **/
-  var examples = {};
-  examples['application/json'] = [ {
-  "bg_id" : 123456789,
-  "name" : "aeiou",
-  "description" : "aeiou",
-  "id" : 123456789,
-  "equipment_type" : "aeiou"
-} ];
-  if (Object.keys(examples).length > 0) {
+  Exercises.fetchAll({ withRelated: ['muscle', 'type', 'equipment'] })
+  .then((exerciseList) => {
     res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(examples[Object.keys(examples)[0]] || {}, null, 2));
-  } else {
-    res.end();
-  }
-}
+    res.end(JSON.stringify(exerciseList));
+  });
+};
 
 exports.getAllRecipes = function(args, res, next) {
   /**
@@ -151,7 +143,7 @@ exports.patchUserProfile = function(args, res, next) {
    * updates specified properties of the specific user.
    *
    * id Long ID of specified user
-   * jsonPatch UpdateUser 
+   * jsonPatch UpdateUser
    * returns user
    **/
   var examples = {};
@@ -170,4 +162,3 @@ exports.patchUserProfile = function(args, res, next) {
     res.end();
   }
 }
-
