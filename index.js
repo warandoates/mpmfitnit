@@ -1,11 +1,28 @@
 'use strict';
 
 var app = require('express')();
+
 var http = require('http');
 var swaggerTools = require('swagger-tools');
 var jsyaml = require('js-yaml');
 var fs = require('fs');
 var serverPort = 10010;
+
+// morgan configuration
+const morgan = require('morgan');
+
+switch (app.get('env')) {
+  case 'development':
+    app.use(morgan('dev'));
+    break;
+
+  case 'production':
+    app.use(morgan('short'));
+    break;
+
+  default:
+}
+
 
 // swaggerRouter configuration
 var options = {
@@ -20,6 +37,7 @@ var swaggerDoc = jsyaml.safeLoad(spec);
 
 // Initialize the Swagger middleware
 swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
+
   // Interpret Swagger resources and attach metadata to request - must be first in swagger-tools middleware chain
   app.use(middleware.swaggerMetadata());
 
@@ -38,3 +56,5 @@ swaggerTools.initializeMiddleware(swaggerDoc, function (middleware) {
     console.log('Swagger-ui is available on http://localhost:%d/docs', serverPort);
   });
 });
+
+module.exports = app;

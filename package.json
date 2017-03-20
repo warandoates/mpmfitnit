@@ -4,8 +4,8 @@
   "description": "A fitness API that provides workout routines and related nutrition information.",
   "main": "index.js",
   "scripts": {
-	"prestart": "npm install",
-	"start": "node index.js"
+    "prestart": "npm install",
+    "start": "node index.js"
   },
   "keywords": [
     "swagger"
@@ -23,6 +23,8 @@
     "swagger-tools": "0.10.1"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
+    "mocha": "^3.2.0",
     "should": "^7.1.0",
     "supertest": "^1.0.0"
   }
