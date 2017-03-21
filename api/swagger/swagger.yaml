@@ -32,7 +32,7 @@ paths:
           description: "unexpected error"
           schema:
             $ref: "#/definitions/errorModel"
-      x-swagger-router-controller: "Default"
+      x-swagger-router-controller: "exercises"
   /exercises/{id}:
     get:
       description: "Returns a specific exercise based on a single ID."
