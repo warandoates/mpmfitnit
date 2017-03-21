@@ -35,19 +35,19 @@ exports.deleterUser = function(args, res, next) {
 }
 
 exports.findExerciseById = function(args, res, next) {
-  console.log('Hello, ', args.id.value);
   Exercises.where('id', args.id.value)
   .fetch({ withRelated: ['muscle', 'type', 'equipment'] })
   .then((exercise) => {
     console.log(exercise);
     res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(Object.assign({}, exercise.toJSON(),
-      {
-        equipment_type_id: undefined,
-        exercise_type_id: undefined,
-        muscle_id: undefined
-      })));
+    res.end(JSON.stringify(exercise));
   });
+    // res.end(JSON.stringify(Object.assign({}, exercise.toJSON(),
+    //   {
+    //     equipment_type_id: undefined,
+    //     exercise_type_id: undefined,
+    //     muscle_id: undefined
+    //   })));
   /**
    * Returns a specific exercise based on a single ID.
    *
@@ -74,14 +74,7 @@ exports.getAllExercises = function (args, res, next) {
   Exercises.fetchAll({ withRelated: ['muscle', 'type', 'equipment'] })
   .then((exerciseList) => {
     res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(exerciseList.map(obj =>
-      Object.assign({}, obj.toJSON(),
-        {
-          equipment_type_id: undefined,
-          exercise_type_id: undefined,
-          muscle_id: undefined
-        })
-    )));
+    res.end(JSON.stringify(exerciseList));
   });
 };
 
@@ -129,6 +122,18 @@ exports.getRecipeById = function(args, res, next) {
 }
 
 exports.getUserById = function(args, res, next) {
+  Exercises.where('id', args.id.value)
+  .fetch({ withRelated: ['muscle', 'type', 'equipment'] })
+  .then((exercise) => {
+    console.log(exercise);
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(Object.assign({}, exercise.toJSON(),
+      {
+        equipment_type_id: undefined,
+        exercise_type_id: undefined,
+        muscle_id: undefined
+      })));
+  });
   // console.log('Hello, ', args.id.value);
   // Users.where('id', args.id.value).fetch()
   // .then((UserInfo) => {
