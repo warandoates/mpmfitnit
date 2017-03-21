@@ -17,6 +17,7 @@
     "bookshelf": "^0.10.3",
     "connect": "^3.2.0",
     "express": "^4.12.3",
+    "jquery": "^3.2.1",
     "js-yaml": "^3.3.0",
     "knex": "^0.12.8",
     "morgan": "^1.8.1",

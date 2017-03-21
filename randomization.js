@@ -1,17 +1,17 @@
 
 const Exercises = require('./models/exercises');
+var $ = require("jquery");
 function randomTriceps() {
   Exercises.forge().where('muscle_id', 'in', '16')
   .fetchAll()
   .then((allTriceps) => {
-    console.log((JSON.parse(JSON.stringify(allTriceps))));
+    // console.log((JSON.parse(JSON.stringify(allTriceps))));
     return (JSON.parse(JSON.stringify(allTriceps)));
   })
   .then((arrayTriceps) => {
     let oldArr = arrayTriceps;
-    // console.log(oldArr);
     let finalResult = addExerciseToNewArr(oldArr, 3);
-    // console.log(finalResult);
+    console.log(finalResult);
     return finalResult;
   });
 }
@@ -19,19 +19,22 @@ function randomTriceps() {
 randomTriceps();
 
 
-function getRandomNum(min, max) {
-  return Math.floor(Math.random() * (max - min + 1)) + max;
-};
+function getRandomElement(myArray) {
+  return myArray[Math.floor(Math.random() * myArray.length)];
+}
 
 function addExerciseToNewArr(array, num) {
-  let arr = array;
-  // console.log('my arrall: ', arr);
-  const result = [];
-  while (result.length < num) {
-    let numBer = getRandomNum(0, arr.length);
-    // console.log(numBer);
-    // console.log(result);
-    result.push(arr[numBer]);
+  let newSet = new Set();
+  while (newSet.size < 3) {
+    newSet.add(getRandomElement(array));
   }
-  return result;
+  return [...newSet];
 }
+
+// function addExerciseToNewArr(array, num) {
+//   let result = [];
+//   while (result.length < num) {
+//     result.push(getRandomElement(array));
+//   }
+//   return result;
+// }
