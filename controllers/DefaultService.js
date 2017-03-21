@@ -35,7 +35,7 @@ exports.deleterUser = function(args, res, next) {
 }
 
 exports.findExerciseById = function(args, res, next) {
-  console.log('Hello, ', args.id.value);
+
   Exercises.where('id', args.id.value).fetch({ withRelated: ['muscle', 'type', 'equipment'] })
   .then((specificExercise) => {
     res.setHeader('Content-Type', 'application/json');

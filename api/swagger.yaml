@@ -148,7 +148,7 @@ paths:
           schema:
             $ref: "#/definitions/errorModel"
       x-swagger-router-controller: "Default"
-  /exercise/types:
+  /exercises/types:
     get:
       description: "returns all exercise types"
       operationId: "getAllExerciseTypes"
@@ -165,7 +165,7 @@ paths:
           schema:
             $ref: "#/definitions/errorModel"
       x-swagger-router-controller: "Default"
-  /exercise/types/{id}:
+  /exercises/types/{id}:
     get:
       description: "Returns specific exercise type based on ID"
       operationId: "getExerciseTypeById"
