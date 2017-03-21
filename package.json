@@ -14,12 +14,13 @@
   "private": true,
   "dependencies": {
     "bookshelf": "^0.10.3",
+    "connect": "^3.2.0",
     "express": "^4.12.3",
+    "js-yaml": "^3.3.0",
     "knex": "^0.12.8",
+    "morgan": "^1.8.1",
     "pg": "^6.1.4",
     "swagger-express-mw": "^0.1.0",
-    "connect": "^3.2.0",
-    "js-yaml": "^3.3.0",
     "swagger-tools": "0.10.1"
   },
   "devDependencies": {

@@ -1,30 +1,19 @@
 const bookshelf = require('../bookshelf');
 
-var Muscles = bookshelf.Model.extend({
-  tableName: 'muscles',
-  exercises: function() {
-    return this.hasMany(Exercises);
-  }
-});
-
-var ExerciseTypes = bookshelf.Model.extend({
-  tableName: 'exercise_types'
-});
-
-var EquipmentTypes = bookshelf.Model.extend({
-  tableName: 'equipment_types'
-});
+require('./muscles');
+require('./exercise_types');
+require('./equipment_types');
 
 var Exercises = bookshelf.Model.extend({
   tableName: 'exercises',
   muscle: function() {
-    return this.belongsTo(Muscles);
+    return this.belongsTo('Muscles');
   },
   type: function() {
-    return this.belongsTo(ExerciseTypes);
+    return this.belongsTo('ExerciseTypes');
   },
   equipment: function() {
-    return this.belongsTo(EquipmentTypes);
+    return this.belongsTo('EquipmentTypes');
   }
 });
 
