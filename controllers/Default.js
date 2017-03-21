@@ -16,16 +16,32 @@ module.exports.findExerciseById = function findExerciseById (req, res, next) {
   Default.findExerciseById(req.swagger.params, res, next);
 };
 
+module.exports.getAllEquipmentTypes = function getAllEquipmentTypes (req, res, next) {
+  Default.getAllEquipmentTypes(req.swagger.params, res, next);
+};
+
+module.exports.getAllExerciseTypes = function getAllExerciseTypes (req, res, next) {
+  Default.getAllExerciseTypes(req.swagger.params, res, next);
+};
+
 module.exports.getAllExercises = function getAllExercises (req, res, next) {
   Default.getAllExercises(req.swagger.params, res, next);
 };
 
-module.exports.getAllRecipes = function getAllRecipes (req, res, next) {
-  Default.getAllRecipes(req.swagger.params, res, next);
+module.exports.getAllMuscles = function getAllMuscles (req, res, next) {
+  Default.getAllMuscles(req.swagger.params, res, next);
 };
 
-module.exports.getRecipeById = function getRecipeById (req, res, next) {
-  Default.getRecipeById(req.swagger.params, res, next);
+module.exports.getEquipmentById = function getEquipmentById (req, res, next) {
+  Default.getEquipmentById(req.swagger.params, res, next);
+};
+
+module.exports.getExerciseTypeById = function getExerciseTypeById (req, res, next) {
+  Default.getExerciseTypeById(req.swagger.params, res, next);
+};
+
+module.exports.getMuscleById = function getMuscleById (req, res, next) {
+  Default.getMuscleById(req.swagger.params, res, next);
 };
 
 module.exports.getUserById = function getUserById (req, res, next) {
