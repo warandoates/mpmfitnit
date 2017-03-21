@@ -4,13 +4,13 @@ var url = require('url');
 
 var Default = require('./DefaultService');
 
-module.exports.addNewUser = function addNewUser (req, res, next) {
-  Default.addNewUser(req.swagger.params, res, next);
-};
-
-module.exports.deleterUser = function deleterUser (req, res, next) {
-  Default.deleterUser(req.swagger.params, res, next);
-};
+// module.exports.addNewUser = function addNewUser (req, res, next) {
+//   Default.addNewUser(req.swagger.params, res, next);
+// };
+//
+// module.exports.deleterUser = function deleterUser (req, res, next) {
+//   Default.deleterUser(req.swagger.params, res, next);
+// };
 
 module.exports.findExerciseById = function findExerciseById (req, res, next) {
   Default.findExerciseById(req.swagger.params, res, next);
