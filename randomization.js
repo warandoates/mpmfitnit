@@ -1,13 +1,22 @@
 
 const Exercises = require('./models/exercises');
-var $ = require("jquery");
-function randomTriceps() {
+
+function getRandomElement(myArray) {
+  return myArray[Math.floor(Math.random() * myArray.length)];
+}
+
+function addExerciseToNewArr(array, num) {
+  let newUniqExerciseSet = new Set();
+  while (newUniqExerciseSet.size < num) {
+    newUniqExerciseSet.add(getRandomElement(array));
+  }
+  return [...newUniqExerciseSet];
+}
+
+function randomTricepsArray() {
   Exercises.forge().where('muscle_id', 'in', '16')
   .fetchAll()
-  .then((allTriceps) => {
-    // console.log((JSON.parse(JSON.stringify(allTriceps))));
-    return (JSON.parse(JSON.stringify(allTriceps)));
-  })
+  .then(allTriceps => JSON.parse(JSON.stringify(allTriceps)))
   .then((arrayTriceps) => {
     let oldArr = arrayTriceps;
     let finalResult = addExerciseToNewArr(oldArr, 3);
@@ -16,20 +25,35 @@ function randomTriceps() {
   });
 }
 
-randomTriceps();
-
-
-function getRandomElement(myArray) {
-  return myArray[Math.floor(Math.random() * myArray.length)];
+function randomChestArray() {
+  Exercises.forge().where('muscle_id', 'in', '11')
+  .fetchAll()
+  .then(allChests => JSON.parse(JSON.stringify(allChests)))
+  .then((arrayChests) => {
+    let oldArr = arrayChests;
+    let finalResult = addExerciseToNewArr(oldArr, 4);
+    console.log(finalResult);
+    return finalResult;
+  });
 }
 
-function addExerciseToNewArr(array, num) {
-  let newSet = new Set();
-  while (newSet.size < 3) {
-    newSet.add(getRandomElement(array));
-  }
-  return [...newSet];
+function randomShouldersArray() {
+  Exercises.forge().where('muscle_id', 'in', '12')
+  .fetchAll()
+  .then(allShoulders => JSON.parse(JSON.stringify(allShoulders)))
+  .then((arrayShoulders) => {
+    let oldArr = arrayShoulders;
+    let finalResult = addExerciseToNewArr(oldArr, 4);
+    console.log(finalResult);
+    return finalResult;
+  });
 }
+
+
+randomTricepsArray();
+randomChestArray();
+randomShouldersArray();
+
 
 // function addExerciseToNewArr(array, num) {
 //   let result = [];
