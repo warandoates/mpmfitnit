@@ -3,6 +3,8 @@
 var url = require('url');
 
 var Default = require('./DefaultService');
+const exerciseRoute = require('./exercise.routes')
+
 
 module.exports.addNewUser = function addNewUser (req, res, next) {
   Default.addNewUser(req.swagger.params, res, next);
@@ -25,7 +27,7 @@ module.exports.getAllExerciseTypes = function getAllExerciseTypes (req, res, nex
 };
 
 module.exports.getAllExercises = function getAllExercises (req, res, next) {
-  Default.getAllExercises(req.swagger.params, res, next);
+  exerciseRoute.getAllExercises(req.swagger.params, res, next);
 };
 
 module.exports.getAllMuscles = function getAllMuscles (req, res, next) {

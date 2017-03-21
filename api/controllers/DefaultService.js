@@ -1,5 +1,5 @@
 'use strict';
-const Exercises = require('../models/exercises');
+const Exercises = require('../../models/exercises');
 exports.addNewUser = function(args, res, next) {
   /**
    * Creates a new user in the database
@@ -63,13 +63,13 @@ exports.findExerciseById = function(args, res, next) {
 //   }
 };
 
-exports.getAllExercises = function(args, res, next) {
-  Exercises.fetchAll({ withRelated: ['muscle', 'type', 'equipment'] })
-  .then((exerciseList) => {
-    res.setHeader('Content-Type', 'application/json');
-    res.end(JSON.stringify(exerciseList));
-  });
-};
+// exports.getAllExercises = function(args, res, next) {
+//   Exercises.fetchAll({ withRelated: ['muscle', 'type', 'equipment'] })
+//   .then((exerciseList) => {
+//     res.setHeader('Content-Type', 'application/json');
+//     res.end(JSON.stringify(exerciseList));
+//   });
+// };
 
 exports.getAllMuscles = function(args, res, next) {
   /**
