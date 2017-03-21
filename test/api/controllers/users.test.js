@@ -6,8 +6,8 @@ const assert = require('chai').assert;
 const { describe, it } = require('mocha');
 const bcrypt = require('bcrypt')
 const supertest = require('supertest');
-const knex = require('../knex');
-const index = require('../index');
+const knex = require('../../../knex');
+const server = require('../../../app');
 
 describe('users routes', () => {
 
