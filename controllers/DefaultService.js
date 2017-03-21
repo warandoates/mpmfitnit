@@ -1,5 +1,6 @@
 'use strict';
 const Exercises = require('../models/exercises');
+
 exports.addNewUser = function(args, res, next) {
   /**
    * Creates a new user in the database
