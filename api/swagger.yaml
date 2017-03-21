@@ -148,41 +148,121 @@ paths:
           schema:
             $ref: "#/definitions/errorModel"
       x-swagger-router-controller: "Default"
-  /recipes:
+  /exercises/types:
     get:
-      description: "returns all recipes"
-      operationId: "getAllRecipes"
+      description: "returns all exercise types"
+      operationId: "getAllExerciseTypes"
       parameters: []
       responses:
         200:
-          description: "get array of all recipes"
+          description: "produces array of all exercise types"
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/recipe"
+              $ref: "#/definitions/exercise_types"
         default:
           description: "unexpected error"
           schema:
             $ref: "#/definitions/errorModel"
       x-swagger-router-controller: "Default"
-  /recipes/{id}:
+  /exercises/types/{id}:
     get:
-      description: "Returns specific recipes based on routine ID"
-      operationId: "getRecipeById"
+      description: "Returns specific exercise type based on ID"
+      operationId: "getExerciseTypeById"
       produces:
       - "application/json"
       parameters:
       - name: "id"
         in: "path"
-        description: "routine ID to fetch"
+        description: "id of exercise type to get"
         required: true
         type: "integer"
-        format: "int32"
+        format: "int64"
       responses:
         200:
-          description: "recipe by routine ID response"
+          description: "ID of exercise response"
           schema:
-            $ref: "#/definitions/recipe"
+            $ref: "#/definitions/exercise_types"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/errorModel"
+      x-swagger-router-controller: "Default"
+  /equipment:
+    get:
+      description: "returns all exercise types"
+      operationId: "getAllEquipmentTypes"
+      parameters: []
+      responses:
+        200:
+          description: "produces array of all equipment types"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/equipment"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/errorModel"
+      x-swagger-router-controller: "Default"
+  /equipment/{id}:
+    get:
+      description: "Returns specific exercise type based on ID"
+      operationId: "getEquipmentById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "id of equipment type to get"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "response of equipment info"
+          schema:
+            $ref: "#/definitions/equipment"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/errorModel"
+      x-swagger-router-controller: "Default"
+  /muscles:
+    get:
+      description: "returns all muscle types"
+      operationId: "getAllMuscles"
+      parameters: []
+      responses:
+        200:
+          description: "produces array of all muscle types"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/muscles"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/errorModel"
+      x-swagger-router-controller: "Default"
+  /muscles/{id}:
+    get:
+      description: "Returns specific exercise type based on ID"
+      operationId: "getMuscleById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "id of muscle type to get"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "response of muscle type info"
+          schema:
+            $ref: "#/definitions/muscles"
         default:
           description: "unexpected error"
           schema:
@@ -192,10 +272,10 @@ definitions:
   exercise:
     type: "object"
     required:
-    - "bg_id"
-    - "description"
-    - "equipment_type"
+    - "equipment_type_id"
+    - "exercise_type_id"
     - "id"
+    - "muscle_id"
     - "name"
     properties:
       id:
@@ -203,11 +283,13 @@ definitions:
         format: "int64"
       name:
         type: "string"
-      description:
-        type: "string"
-      equipment_type:
-        type: "string"
-      bg_id:
+      muscle_id:
+        type: "integer"
+        format: "int64"
+      exercise_type_id:
+        type: "integer"
+        format: "int64"
+      equipment_type_id:
         type: "integer"
         format: "int64"
   newUser:
@@ -242,7 +324,7 @@ definitions:
     properties:
       id:
         type: "integer"
-        format: "int32"
+        format: "int64"
       first_name:
         type: "string"
       last_name:
@@ -270,23 +352,41 @@ definitions:
       weight:
         type: "integer"
         format: "int32"
-  recipe:
+  exercise_types:
     type: "object"
     required:
-    - "bgId"
-    - "description"
     - "id"
-    - "title"
+    - "name"
     properties:
       id:
         type: "integer"
-        format: "int32"
-      bgId:
-        type: "integer"
-        format: "int32"
-      title:
+        format: "int64"
+      name:
         type: "string"
-      description:
+  equipment:
+    type: "object"
+    required:
+    - "id"
+    - "name"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+  muscles:
+    type: "object"
+    required:
+    - "id"
+    - "name"
+    - "size"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      size:
         type: "string"
   errorModel:
     type: "object"

@@ -38,7 +38,6 @@ exports.findExerciseById = function(args, res, next) {
   Exercises.where('id', args.id.value)
   .fetch({ withRelated: ['muscle', 'type', 'equipment'] })
   .then((exercise) => {
-    console.log(exercise);
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(exercise));
   });
@@ -78,18 +77,17 @@ exports.getAllExercises = function (args, res, next) {
   });
 };
 
-exports.getAllRecipes = function(args, res, next) {
+exports.getAllMuscles = function(args, res, next) {
   /**
-   * returns all recipes
+   * returns all muscle types
    *
    * returns List
    **/
   var examples = {};
   examples['application/json'] = [ {
-  "description" : "aeiou",
-  "id" : 123,
-  "title" : "aeiou",
-  "bgId" : 123
+  "size" : "aeiou",
+  "name" : "aeiou",
+  "id" : 123456789
 } ];
   if (Object.keys(examples).length > 0) {
     res.setHeader('Content-Type', 'application/json');
@@ -99,19 +97,18 @@ exports.getAllRecipes = function(args, res, next) {
   }
 }
 
-exports.getRecipeById = function(args, res, next) {
+exports.getMuscleById = function(args, res, next) {
   /**
-   * Returns specific recipes based on routine ID
+   * Returns specific exercise type based on ID
    *
-   * id Integer routine ID to fetch
-   * returns recipe
+   * id Long id of muscle type to get
+   * returns muscles
    **/
   var examples = {};
   examples['application/json'] = {
-  "description" : "aeiou",
-  "id" : 123,
-  "title" : "aeiou",
-  "bgId" : 123
+  "size" : "aeiou",
+  "name" : "aeiou",
+  "id" : 123456789
 };
   if (Object.keys(examples).length > 0) {
     res.setHeader('Content-Type', 'application/json');
@@ -151,7 +148,7 @@ exports.getUserById = function(args, res, next) {
   "password" : "aeiou",
   "last_name" : "aeiou",
   "weight" : 123,
-  "id" : 123,
+  "id" : 123456789,
   "first_name" : "aeiou",
   "email" : "aeiou"
 };
@@ -162,6 +159,7 @@ exports.getUserById = function(args, res, next) {
     res.end();
   }
 }
+
 
 exports.patchUserProfile = function(args, res, next) {
   /**
@@ -176,10 +174,89 @@ exports.patchUserProfile = function(args, res, next) {
   "password" : "aeiou",
   "last_name" : "aeiou",
   "weight" : 123,
-  "id" : 123,
+  "id" : 123456789,
   "first_name" : "aeiou",
   "email" : "aeiou"
 };
+  if (Object.keys(examples).length > 0) {
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(examples[Object.keys(examples)[0]] || {}, null, 2));
+  } else {
+    res.end();
+  }
+}
+
+exports.getAllEquipmentTypes = function(args, res, next) {
+  /**
+   * returns all exercise types
+   *
+   * returns List
+   **/
+  var examples = {};
+  examples['application/json'] = [ {
+  "name" : "aeiou",
+  "id" : 123456789
+} ];
+  if (Object.keys(examples).length > 0) {
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(examples[Object.keys(examples)[0]] || {}, null, 2));
+  } else {
+    res.end();
+  }
+}
+
+
+exports.getEquipmentById = function(args, res, next) {
+  /**
+   * Returns specific exercise type based on ID
+   *
+   * id Long id of equipment type to get
+   * returns equipment
+   **/
+  var examples = {};
+  examples['application/json'] = {
+  "name" : "aeiou",
+  "id" : 123456789
+};
+  if (Object.keys(examples).length > 0) {
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(examples[Object.keys(examples)[0]] || {}, null, 2));
+  } else {
+    res.end();
+  }
+}
+
+exports.getExerciseTypeById = function(args, res, next) {
+  /**
+   * Returns specific exercise type based on ID
+   *
+   * id Long id of exercise type to get
+   * returns exercise_types
+   **/
+  var examples = {};
+  examples['application/json'] = {
+  "name" : "aeiou",
+  "id" : 123456789
+};
+  if (Object.keys(examples).length > 0) {
+    res.setHeader('Content-Type', 'application/json');
+    res.end(JSON.stringify(examples[Object.keys(examples)[0]] || {}, null, 2));
+  } else {
+    res.end();
+  }
+}
+
+exports.getAllExerciseTypes = function(args, res, next) {
+  /**
+   * returns all exercise types
+   *
+   * returns List
+   **/
+  var examples = {};
+  examples['application/json'] = [ {
+  "name" : "aeiou",
+  "id" : 123456789
+} ];
   if (Object.keys(examples).length > 0) {
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(examples[Object.keys(examples)[0]] || {}, null, 2));
