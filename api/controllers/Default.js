@@ -6,13 +6,13 @@ var Default = require('./DefaultService');
 const exerciseRoute = require('./exercise.routes')
 
 
-module.exports.addNewUser = function addNewUser (req, res, next) {
-  Default.addNewUser(req.swagger.params, res, next);
-};
-
-module.exports.deleterUser = function deleterUser (req, res, next) {
-  Default.deleterUser(req.swagger.params, res, next);
-};
+// module.exports.addNewUser = function addNewUser (req, res, next) {
+//   Default.addNewUser(req.swagger.params, res, next);
+// };
+//
+// module.exports.deleterUser = function deleterUser (req, res, next) {
+//   Default.deleterUser(req.swagger.params, res, next);
+// };
 
 module.exports.findExerciseById = function findExerciseById (req, res, next) {
   Default.findExerciseById(req.swagger.params, res, next);
