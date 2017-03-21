@@ -1,9 +1,8 @@
 'use strict';
 const Exercises = require('../../models/exercises');
 
-
-
-let getAllExercises = function(args, res, next) {
+// operationId `getAllExercises` references this function
+function getAllExercises(args, res, next) {
   Exercises.fetchAll({ withRelated: ['muscle', 'type', 'equipment'] })
   .then((exerciseList) => {
     res.setHeader('Content-Type', 'application/json');

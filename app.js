@@ -3,10 +3,6 @@
 var SwaggerExpress = require('swagger-express-mw');
 var app = require('express')();
 
-const controllers = require('./api/controllers/routeSwitcher');
-
-
-
 var config = {
   appRoot: __dirname // required config
 };
@@ -16,8 +12,6 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
 
   // install middleware
   swaggerExpress.register(app);
-
-  // app.use(controllers);
 
   var port = process.env.PORT || 10010;
 
