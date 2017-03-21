@@ -1,5 +1,5 @@
 'use strict';
-const Exercises = require('../models/exercises');
+const Exercises = require('../../models/exercises');
 
 // exports.addNewUser = function(args, res, next) {
 //   /**
