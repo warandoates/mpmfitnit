@@ -34,7 +34,7 @@ describe('users routes', () => {
   });
 
   // test the POST method on users
-  it('should response to POST /users'), (done) => {
+  it('should response to POST /users', (done) => {
     const password = 'ilovebackend';
 
     supertest(index)
@@ -86,7 +86,7 @@ describe('users routes', () => {
 
             assert.isTrue(isMatch, "passwords don't match");
             done();
-          });
+          })
           .catch((dbErr) => {
             done(dbErr);
           });
