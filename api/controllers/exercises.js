@@ -3,10 +3,14 @@
 const Exercises = require('../../models/exercises');
 const ExerciseTypes = require('../../models/exercise_types');
 
+<<<<<<< HEAD
 var url = require('url');
 
 
 module.exports.getAllExercises = function(req, res, next) {
+=======
+let getAllExercises = function(args, res, next) {
+>>>>>>> master
   Exercises.fetchAll({ withRelated: ['muscle', 'type', 'equipment'] })
   .then((exerciseList) => {
     res.setHeader('Content-Type', 'application/json');
