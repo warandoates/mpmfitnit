@@ -1,8 +1,6 @@
 'use strict';
 const Exercises = require('../../models/exercises');
 
-
-
 let getAllExercises = function(args, res, next) {
   Exercises.fetchAll({ withRelated: ['muscle', 'type', 'equipment'] })
   .then((exerciseList) => {
