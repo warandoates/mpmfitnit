@@ -3,15 +3,11 @@
 const Exercises = require('../../models/exercises');
 const ExerciseTypes = require('../../models/exercise_types');
 
-<<<<<<< HEAD
 var url = require('url');
 
 
 module.exports.getAllExercises = function(req, res, next) {
-=======
-let getAllExercises = function(args, res, next) {
->>>>>>> master
-  Exercises.fetchAll({ withRelated: ['muscle', 'type', 'equipment'] })
+  Exercises.where('id', '<', '25').fetchAll({ withRelated: ['muscle', 'type', 'equipment'] })
   .then((exerciseList) => {
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(exerciseList));
@@ -32,45 +28,18 @@ module.exports.getAllExerciseTypes = function(args, res, next) {
     ExerciseTypes.fetchAll()
       .then((exerciseTypesList) => {
         res.setHeader('Content-Type', 'application/json');
+        // console.log(JSON.stringify(exerciseTypesList));
         res.end(JSON.stringify(exerciseTypesList));
-      })
-    /**
-     * returns all exercise types
-     *
-     * returns List
-     **/
-  //   var examples = {};
-  //   examples['application/json'] = [ {
-  //   "name" : "aeiou",
-  //   "id" : 123456789
-  // } ];
-  //   if (Object.keys(examples).length > 0) {
-  //     res.setHeader('Content-Type', 'application/json');
-  //     res.end(JSON.stringify(examples[Object.keys(examples)[0]] || {}, null, 2));
-  //   } else {
-  //     res.end();
-  //   }
-  }
-
-let getExerciseTypeById = function(args, res, next) {
-    /**
-     * Returns specific exercise type based on ID
-     *
-     * id Long id of exercise type to get
-     * returns exercise_types
-     **/
-    var examples = {};
-    examples['application/json'] = {
-    "name" : "aeiou",
-    "id" : 123456789
+      });
   };
-    if (Object.keys(examples).length > 0) {
-      res.setHeader('Content-Type', 'application/json');
-      res.end(JSON.stringify(examples[Object.keys(examples)[0]] || {}, null, 2));
-    } else {
-      res.end();
-    }
-  }
+
+module.exports.getExerciseTypeById = function(req, res, next) {
+    ExerciseTypes.where('id', req.swagger.params.id.value).fetch()
+      .then((response) => {
+        res.setHeader('Content-Type', 'application/json');
+        res.json(response);
+      })
+};
 
 // module.exports = {
 //   getAllExercises: getAllExercises,

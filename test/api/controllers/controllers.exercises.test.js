@@ -89,78 +89,78 @@ describe('exercises route', () => {
                 }, done);
         });
     });
-    // describe('GET /exercises/types', () => {
-    //     it('should respond with a status code of 200', (done) => {
-    //         request(index)
-    //             .get('/exercises/types')
-    //             .expect(200, done);
-    //     });
-    //
-    //     // it("should respond with content-type of application/json", (done) => {
-    //     //     request(index)
-    //     //         .get('/exercises/types')
-    //     //         .set('Accept', 'application/json')
-    //     //         .expect('Content-Type', /application\/json/, done);
-    //     // });
-    //     //
-    //     // it('should respond with an array of all exercise types', (done) => {
-    //     //     request(index)
-    //     //         .get('/exercises/types')
-    //     //         .set('Accept', 'application/json')
-    //     //         .expect([{
-    //     //                 id: 1,
-    //     //                 name: 'Cardio'
-    //     //             },
-    //     //             {
-    //     //                 id: 2,
-    //     //                 name: 'Olympic Weightlifting'
-    //     //             },
-    //     //             {
-    //     //                 id: 3,
-    //     //                 name: 'Plyometrics'
-    //     //             },
-    //     //             {
-    //     //                 id: 4,
-    //     //                 name: 'Powerlifting'
-    //     //             },
-    //     //             {
-    //     //                 id: 5,
-    //     //                 name: 'Strength'
-    //     //             },
-    //     //             {
-    //     //                 id: 6,
-    //     //                 name: 'Stretching'
-    //     //             },
-    //     //             {
-    //     //                 id: 7,
-    //     //                 name: 'Strongman'
-    //     //             }
-    //     //         ], done)
-    //     // })
-    // });
+    describe('GET /exercises/types', () => {
+        it('should respond with a status code of 200', (done) => {
+            request(index)
+                .get('/exercises/types')
+                .expect(200, done);
+        });
 
-    // describe('GET /exercises/types/:id', () => {
-    //     it('should respond with a status code of 200', (done) => {
-    //         request(index)
-    //             .get('/exercises/types/7')
-    //             .expect(200, done);
-    //     });
-    //
-    //     it("should respond with content-type of application/json", (done) => {
-    //         request(index)
-    //             .get('/exercises/types/7')
-    //             .set('Accept', 'application/json')
-    //             .expect('Content-Type', /application\/json/, done);
-    //     });
-    //
-    //     it('should respond with exercise type object with an id of 7', (done) => {
-    //         request(index)
-    //             .get('exercises/types/7')
-    //             .set('accept', 'application/json')
-    //             .expect({
-    //                 id: 7,
-    //                 name: 'Strongman'
-    //             }, done)
-    //     });
-    // });
+        it("should respond with content-type of application/json", (done) => {
+            request(index)
+                .get('/exercises/types')
+                .set('Accept', 'application/json')
+                .expect('Content-Type', /application\/json/, done);
+        });
+
+        it('should respond with an array of all exercise types', (done) => {
+            request(index)
+                .get('/exercises/types')
+                .set('Accept', 'application/json')
+                .expect([{
+                        id: 1,
+                        name: 'Cardio'
+                    },
+                    {
+                        id: 2,
+                        name: 'Olympic Weightlifting'
+                    },
+                    {
+                        id: 3,
+                        name: 'Plyometrics'
+                    },
+                    {
+                        id: 4,
+                        name: 'Powerlifting'
+                    },
+                    {
+                        id: 5,
+                        name: 'Strength'
+                    },
+                    {
+                        id: 6,
+                        name: 'Stretching'
+                    },
+                    {
+                        id: 7,
+                        name: 'Strongman'
+                    }
+                ], done)
+        })
+    });
+
+    describe('GET /exercises/types/:id', () => {
+        it('should respond with a status code of 200', (done) => {
+            request(index)
+                .get('/exercises/types/7')
+                .expect(200, done);
+        });
+
+        it("should respond with content-type of application/json", (done) => {
+            request(index)
+                .get('/exercises/types/7')
+                .set('Accept', 'application/json')
+                .expect('Content-Type', /application\/json/, done);
+        });
+
+        it('should respond with exercise type object with an id of 7', (done) => {
+            request(index)
+                .get('/exercises/types/7')
+                .set('Accept', 'application/json')
+                .expect({
+                    "id": 7,
+                    "name": 'Strongman'
+                }, done)
+        });
+    });
 });
