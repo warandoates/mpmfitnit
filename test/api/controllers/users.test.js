@@ -7,7 +7,7 @@ const { describe, it } = require('mocha');
 const bcrypt = require('bcrypt')
 const supertest = require('supertest');
 const knex = require('../../../knex');
-const server = require('../../../app');
+const app = require('../../../app');
 
 describe('users routes', () => {
 
@@ -37,15 +37,15 @@ describe('users routes', () => {
   it('should response to POST /users', (done) => {
     const password = 'ilovebackend';
 
-    supertest(index)
+    supertest(app)
       .post('/users')
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .send({
-        firstName: 'Paola',
-        lastName: 'Carlos',
+        first_name: 'Paola',
+        last_name: 'Carlos',
         email: 'paoladatabasequeen@boss.com',
-        password
+        password: password,
       })
       .expect((res) => {
         delete res.body.createdAt;

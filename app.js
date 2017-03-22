@@ -1,5 +1,9 @@
 'use strict';
 
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
+
 var SwaggerExpress = require('swagger-express-mw');
 var app = require('express')();
 

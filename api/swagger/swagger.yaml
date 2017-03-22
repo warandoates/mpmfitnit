@@ -78,7 +78,7 @@ paths:
           description: "unexpected error"
           schema:
             $ref: "#/definitions/errorModel"
-      x-swagger-router-controller: "Default"
+      x-swagger-router-controller: "users"
   /users/{id}:
     get:
       description: "Returns a user information based on a single ID. The user must\
@@ -102,10 +102,10 @@ paths:
           description: "unexpected error"
           schema:
             $ref: "#/definitions/errorModel"
-      x-swagger-router-controller: "Default"
+      x-swagger-router-controller: "users"
     delete:
       description: "deletes a single user from the database."
-      operationId: "deleterUser"
+      operationId: "deleteUser"
       parameters:
       - name: "id"
         in: "path"
@@ -120,7 +120,7 @@ paths:
           description: "unexpected error"
           schema:
             $ref: "#/definitions/errorModel"
-      x-swagger-router-controller: "Default"
+      x-swagger-router-controller: "users"
     patch:
       description: "updates specified properties of the specific user."
       operationId: "patchUserProfile"
@@ -300,6 +300,7 @@ definitions:
     - "last_name"
     - "password"
     - "weight"
+    - "user_intentions"
     properties:
       first_name:
         type: "string"
@@ -312,6 +313,8 @@ definitions:
       weight:
         type: "integer"
         format: "int32"
+      user_intentions:
+        type: "string"
   user:
     type: "object"
     required:
@@ -321,6 +324,7 @@ definitions:
     - "last_name"
     - "password"
     - "weight"
+    - "user_intentions"
     properties:
       id:
         type: "integer"
@@ -336,6 +340,8 @@ definitions:
       weight:
         type: "integer"
         format: "int32"
+      user_intentions:
+        type: "string"
   updateUser:
     type: "object"
     required:
@@ -352,6 +358,8 @@ definitions:
       weight:
         type: "integer"
         format: "int32"
+      user_intentions:
+        type: "string"
   exercise_types:
     type: "object"
     required:

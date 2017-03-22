@@ -1,14 +1,15 @@
 const bookshelf = require('../bookshelf');
 
 // require('./exercises');
-require('./routines');
+// require('./routines');
 
 let Users = bookshelf.Model.extend({
   tableName: 'users',
-  routine: function() {
-    return this.hasMany('Routines');
-  }
-  }
+  hasTimestamps: true
+
+  // routine: function() {
+  //   return this.hasMany('Routines');
+  // }
 });
 
 module.exports = bookshelf.model('Users', Users);

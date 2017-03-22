@@ -4,7 +4,9 @@
   "description": "A fitness API that provides workout routines and related nutrition information.",
   "main": "app.js",
   "scripts": {
+    "prestart": "npm install",
     "start": "node app.js",
+    "nodemon": "nodemon app.js",
     "test": "mocha"
   },
   "keywords": [
@@ -18,6 +20,7 @@
     "connect": "^3.2.0",
     "express": "^4.12.3",
     "express-validation": "^1.0.2",
+    "humps": "^2.0.0",
     "joi": "^10.2.2",
     "js-yaml": "^3.3.0",
     "knex": "^0.12.8",
@@ -28,8 +31,16 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "dotenv": "^4.0.0",
     "mocha": "^3.2.0",
+    "nodemon": "^1.11.0",
     "should": "^7.1.0",
     "supertest": "^1.0.0"
+  },
+  "engines": {
+    "node": "7.4.0"
+  },
+  "directories": {
+    "test": "test"
   }
 }
