@@ -12,6 +12,23 @@ function addExerciseToNewArr(array, num) {
   return [...newUniqExerciseSet];
 }
 
+function getExercisesByGroup(numOfExercises, idInString) {
+  return Exercises.forge().where('muscle_id', 'in', idInString)
+  .fetchAll({
+    withRelated: ['muscle', 'type', 'equipment']
+  })
+  .then(allExercises => allExercises.toJSON())
+  .then((allExercisesJson) => {
+    let oldArr = allExercisesJson;
+    let exercisesSelectedArr = addExerciseToNewArr(oldArr, numOfExercises);
+    console.log(exercisesSelectedArr);
+    return exercisesSelectedArr;
+  });
+}
+
+let triceps = getExercisesByGroup(3, '16');
+
+
 function randomTricepsArray() {
   return Exercises.forge().where('muscle_id', 'in', '16')
   .fetchAll({
@@ -102,7 +119,7 @@ function bicAndForamsArray() {
   });
 }
 
-bicAndForamsArray();
+// bicAndForamsArray();
 
 
 // function addExerciseToNewArr(array, num) {
