@@ -3,7 +3,8 @@
 var SwaggerExpress = require('swagger-express-mw');
 var app = require('express')();
 
-const controllers = require('./api/controllers/routeSwitcher');
+
+// const controllers = require('./api/controllers/routeSwitcher');
 
 
 
@@ -20,6 +21,7 @@ SwaggerExpress.create(config, function(err, swaggerExpress) {
   // app.use(controllers);
 
   var port = process.env.PORT || 10010;
+
 
   app.listen(port, () => {
     if (app.get('env') !== 'test') {
