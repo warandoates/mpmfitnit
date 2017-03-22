@@ -1,10 +1,37 @@
 'use strict';
 
+
+
 /**
 * Creates a new user in the database
 **/
+const bcrypt = require('bcrypt-as-promised');
+const Users = require('../../models/users');
 
-function addNewUser(req.swagger.params, res, next) {
+function addNewUser(req, res, next) {
+
+  bcrypt.hash(req.swagger.body.password, 12)
+    .then((hashed_password) => {
+      return Users.forge({
+       first_name: req.swagger.body.firstName,
+       last_name: req.swagger.body.lastName,
+       email: req.swagger.body.email,
+       hashed_password: hashed_password,
+       weight: req.swagger.body.weight,
+       intentions: req.swagger.body.intentions
+      })
+    })
+    .save()
+    .then((user) => {
+      res.json({error: false, data: {id: user.get('id')}});
+    })
+    .catch(function (err) {
+      res.status(500).json({error: true, data: {message: err.message}});
+    });
+
+
+
+
   var examples = {};
   examples['application/json'] = {
   "password" : "aeiou",
@@ -20,7 +47,10 @@ function addNewUser(req.swagger.params, res, next) {
   } else {
     res.end();
   }
-}
+
+  Users.fetchAll({ withRelated: ['']})
+
+};
 
 
 
