@@ -12,19 +12,7 @@ function addNewUser(req, res) {
   let email = req.body.email;
   let password = req.body.password;
 
-  // if (!email) {
-  //   res.setHeader("Content-Type", "application/json")
-  //   res.status(400)
-  //   res.end(JSON.stringify({code: 400, message: "foo"}));
-  // // }
-  // if (!password) {
-  //   res.setHeader("Content-Type", "application/json")
-  //   res.status(400)
-  //   res.end(JSON.stringify({code: 400, message: "foo"}));
-  // }
-
-
-  bcrypt.hash(password, 12)
+    bcrypt.hash(password, 12)
     .then((hashed_password) => {
       return Users.forge({
        first_name: req.body.first_name,
@@ -39,12 +27,11 @@ function addNewUser(req, res) {
       let u = JSON.parse(JSON.stringify(user));
       delete u.hashed_password;
       res.setHeader('Content-Type', 'application/json');
-      res.end(u);
+      res.send(u);
     })
     .catch(function (err) {
       res.setHeader("Content-Type", "application/json")
-      res.status(400)
-      res.end(JSON.stringify({code: 400, message: "foo"}));
+      res.status(400).json({code: 400, message: "foo"});
     });
   });
 }

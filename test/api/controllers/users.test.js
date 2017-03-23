@@ -49,7 +49,7 @@ describe('TESTS FOR USERS ROUTE', () => {
         weight: 123,
         user_intentions: 'lose weight'
       })
-      .expect('Content-Type', 'application/json')
+      .expect('Content-Type', /application\/json/)
       .expect(400, JSON.stringify({code: 400, message: "foo"}), done);
   });
 
@@ -66,9 +66,10 @@ describe('TESTS FOR USERS ROUTE', () => {
         weight: 123,
         user_intentions: 'lose weight'
       })
-      .expect('Content-Type', 'application/json')
-      .expect(400, 'Password must be at least 8 characters long', done);
+      .expect('Content-Type', /application\/json/)
+      .expect(400, JSON.stringify({code: 400, message: "foo"}), done);
   });
+            // .expect(400, JSON.stringify({code: 400, message: "no password"}), done);
 
 
   it('should response to POST /users', (done) => {
@@ -141,30 +142,6 @@ describe('TESTS FOR USERS ROUTE', () => {
   describe('with token', () => {
     const agent = request.agent(app);
 
-    // beforeEach((done) => {
-    //   knex.seed.run()
-    //     .then(() => {
-    //       request(app)
-    //         .post('/token')
-    //         .set('Accept', 'application/json')
-    //         .set('Content-Type', 'application/json')
-    //         .send({
-    //           email: 'marylovesserverside@yeehaw.com',
-    //           password: 'followthewhiterabbit'
-    //         })
-    //     })
-    //     .end((err, res) => {
-    //       if (err) {
-    //         return done(err);
-    //       }
-    //       agent.saveCookies(res);
-    //       done();
-    //     })
-    //     .catch((err) => {
-    //       done(err);
-    //     });
-    // });
-
     it('should PATCH /users/:id', (done) => {
       agent
         .patch('/users/1')
@@ -193,10 +170,4 @@ describe('TESTS FOR USERS ROUTE', () => {
         }, done);
     });
   });
-
-
-
-
-
-
 });
