@@ -75,7 +75,7 @@ paths:
           required:
           - "first_name"
           - "last_name"
-          # - "password"
+          - "password"
           - "weight"
           - "user_intentions"
           properties:
@@ -517,11 +517,11 @@ definitions:
   errorModel:
     type: "object"
     required:
-    - "code"
+    # - "code"
     - "message"
     properties:
-      code:
-        type: "integer"
-        format: "int32"
+      # code:
+      #   type: "integer"
+      #   format: "int32"
       message:
         type: "string"

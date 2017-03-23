@@ -67,7 +67,7 @@ describe('TESTS FOR USERS ROUTE', () => {
         user_intentions: 'lose weight'
       })
       .expect('Content-Type', /application\/json/)
-      .expect(400, JSON.stringify({code: 400, message: "foo"}), done);
+      .expect(400, /Request validation failed/, done);
   });
             // .expect(400, JSON.stringify({code: 400, message: "no password"}), done);
 

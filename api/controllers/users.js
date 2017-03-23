@@ -12,6 +12,7 @@ function addNewUser(req, res) {
   let email = req.body.email;
   let password = req.body.password;
 
+
     bcrypt.hash(password, 12)
     .then((hashed_password) => {
       return Users.forge({
