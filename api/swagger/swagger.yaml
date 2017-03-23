@@ -183,7 +183,7 @@ paths:
       produces:
         - application/json
       parameters:
-      - name: "email and password"
+      - name: "credentials"
         in: "body"
         description: "user email and password"
         required: true
