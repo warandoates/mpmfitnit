@@ -10,7 +10,8 @@ module.exports.getAllEquipmentTypes = function(req, res, next) {
 
 
 module.exports.getEquipmentById = function(req, res, next) {
-    Equipment.where('id', req.swagger.params.id.value).fetch()
+    Equipment.where('id', req.swagger.params.id.value)
+        .fetch()
         .then((equipment) => {
             res.setHeader('Content-Type', 'application/json');
             res.end(JSON.stringify(equipment));

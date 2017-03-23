@@ -28,48 +28,52 @@ function getExercisesByGroup(numOfExercises, idInString) {
         });
 }
 
+let bicAndForamsRoutine = function() {
+    return Promise.all([getExercisesByGroup(3, '7'), getExercisesByGroup(1, '13')])
+        .then(([resultBiceps, resultForArms]) => {
+            let newArray = resultBiceps.concat(resultForArms);
+            console.log(newArray);
+            return newArray;
+        })
+        .catch((err) => {
+            throw err;
+        });
+};
+
 
 module.exports.getRandomRoutines = function(req, res, next) {
-      let muscleGroup = req.swagger.params.muscleGroup.value;
-      // let newWord musclegroup.toString();
-      if (muscleGroup.toString() === 'triceps') {
-
-        return getExercisesByGroup(3, '16')
-        .then((response) => {
-          res.setHeader('Content-Type', 'application/json');
-          return res.end(JSON.stringify(response));
-        });
-      } else if (muscleGroup.toString() === 'chest') {
-        return getExercisesByGroup(4, '11')
-        .then((response) => {
-          res.setHeader('Content-Type', 'application/json');
-          return res.end(JSON.stringify(response));
-        });
-      }
-        // console.log("this is log", JSON.stringify(getExercisesByGroup(3, '16')));
-  // console.log(getExercisesByGroup(3, '16'));
-    // let muscleGroup = req.swagger.params.muscleGroup.value;
-    // // console.log(muscleGroup);
-    // if (muscleGroup == "triceps") {
-    //     res.setHeader('Content-Type', 'application/json');
-    //     // console.log(JSON.stringify(getExercisesByGroup(3, '16')));
-    //     return res.end(JSON.stringify(getExercisesByGroup(3, '16')));
-    //     // res.send(getExercisesByGroup(3, '16'));
-    // } else {
-    //     res.json('false')
-    // }
-    // let arr = [];
-    // let val = muscleGroup[0];
-    // let obj = {
-    //   thisProp: val
-    // };
-    // let jsonedObjs = JSON.stringify(obj)
-    //
-    // arr.push(jsonedObjs);
-    // console.log(arr);
-    // res.json(getExercisesByGroup(3, '16'));
-
-    // res.json('false')
-
-    // next();
+    let muscleGroup = req.swagger.params.muscleGroup.value;
+    
+    switch (muscleGroup.toString()) {
+        case 'triceps':
+            getExercisesByGroup(3, '16')
+                .then((response) => {
+                    res.setHeader('Content-Type', 'application/json');
+                    return res.end(JSON.stringify(response));
+                });
+            break;
+        case 'chest':
+            getExercisesByGroup(4, '11')
+                .then((response) => {
+                    res.setHeader('Content-Type', 'application/json');
+                    return res.end(JSON.stringify(response));
+                });
+            break;
+        case 'shoulders':
+            getExercisesByGroup(4, '12')
+                .then((response) => {
+                    res.setHeader('Content-Type', 'application/json');
+                    return res.end(JSON.stringify(response));
+                });
+            break;
+        case 'biceps':
+            bicAndForamsRoutine()
+                .then((response) => {
+                    res.setHeader('Content-Type', 'application/json');
+                    return res.end(JSON.stringify(response));
+                })
+            break;
+        default:
+            return 'oh no';
+    }
 };

@@ -12,6 +12,10 @@ module.exports.getAllExercises = function(req, res, next) {
   .then((exerciseList) => {
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(exerciseList));
+  })
+  .catch((err) => {
+    res.sendStatus(404);
+    next(err);
   });
 };
 
@@ -20,8 +24,19 @@ module.exports.getAllExercises = function(req, res, next) {
 module.exports.findExerciseById = function(req, res, next) {
   Exercises.where('id', req.swagger.params.id.value).fetch({ withRelated: ['muscle', 'type', 'equipment'] })
   .then((specificExercise) => {
+    if(!specificExercise) {
+      console.log(specificExercise);
+      console.log(!specificExercise);
+      res.sendStatus(404);
+      return next();
+    }
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(specificExercise));
+  })
+  .catch((err) => {
+    console.log(err);
+    // res.sendStatus(404);
+    next(err);
   });
 };
 
