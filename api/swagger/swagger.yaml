@@ -15,6 +15,7 @@ consumes:
 - "application/json"
 produces:
 - "application/json"
+- "text/plain"
 paths:
   /exercises:
     get:
@@ -57,23 +58,50 @@ paths:
             $ref: "#/definitions/errorModel"
       x-swagger-router-controller: "exercises"
   /users:
+    # our controller name
+    x-swagger-router-controller: "users"
     post:
       description: "Creates a new user in the database"
       operationId: "addNewUser"
       produces:
       - "application/json"
       parameters:
-      - in: "body"
-        name: "newUser"
+      - name: "user"
+        in: "body"
         description: "new user to add to the database"
         required: true
         schema:
-          $ref: "#/definitions/newUser"
+          type: "object"
+          required:
+          - "first_name"
+          - "last_name"
+          - "password"
+          - "weight"
+          - "user_intentions"
+          properties:
+            first_name:
+              type: "string"
+            last_name:
+              type: "string"
+            email:
+              type: "string"
+            password:
+              type: "string"
+            weight:
+              type: "integer"
+              format: "int32"
+            user_intentions:
+              type: "string"
+        #   $ref: "#/definitions/newUser"
       responses:
         200:
           description: "New user response"
           schema:
             $ref: "#/definitions/user"
+        400:
+          description: "You didn't make a user"
+          schema:
+            $ref: "#/definitions/errorModel"
         default:
           description: "unexpected error"
           schema:
@@ -105,7 +133,7 @@ paths:
       x-swagger-router-controller: "users"
     delete:
       description: "deletes a single user from the database."
-      operationId: "deleterUser"
+      operationId: "deleteUser"
       parameters:
       - name: "id"
         in: "path"
@@ -344,7 +372,11 @@ definitions:
     - "last_name"
     - "password"
     - "weight"
+    - "user_intentions"
     properties:
+      # id:
+      #   type: "integer"
+      #   format: "int64"
       first_name:
         type: "string"
       last_name:
@@ -356,6 +388,8 @@ definitions:
       weight:
         type: "integer"
         format: "int32"
+      user_intentions:
+        type: "string"
   user:
     type: "object"
     required:
@@ -363,23 +397,26 @@ definitions:
     - "first_name"
     - "id"
     - "last_name"
-    - "password"
+    - "hashed_password"
     - "weight"
+    - "user_intentions"
     properties:
       id:
         type: "integer"
-        format: "int64"
+        # format: "int64"
       first_name:
         type: "string"
       last_name:
         type: "string"
       email:
         type: "string"
-      password:
+      hashed_password:
         type: "string"
       weight:
         type: "integer"
         format: "int32"
+      user_intentions:
+        type: "string"
   updateUser:
     type: "object"
     required:
@@ -396,6 +433,8 @@ definitions:
       weight:
         type: "integer"
         format: "int32"
+      user_intentions:
+        type: "string"
   exercise_types:
     type: "object"
     required:

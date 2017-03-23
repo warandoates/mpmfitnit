@@ -2,24 +2,27 @@
 
 process.env.NODE_ENV = 'test';
 
-const assert = require('chai').assert;
 const { describe, it } = require('mocha');
-const bcrypt = require('bcrypt')
-const supertest = require('supertest');
+const assert = require('chai').assert;
+const request = require('supertest');
 const knex = require('../../../knex');
-const server = require('../../../app');
+const app = require('../../../app');
+const bcrypt = require('bcrypt')
 
 describe('users routes', () => {
 
   // `before` runs once before all tests in a describe
   before((done) => {
-    knex.migrate.latest()
-      .then(() => {
-        done();
-      })
-      .catch((err) => {
-        done(err);
-      });
+    knex.migrate.rollback()
+    .then(function(){
+      return knex.migrate.latest()
+    })
+    .then(() => {
+      done();
+    })
+    .catch((err) => {
+      done(err);
+    });
   });
 
   // `beforeEach` is run before each test in a describe
@@ -34,18 +37,36 @@ describe('users routes', () => {
   });
 
   // test the POST method on users
-  it('should response to POST /users'), (done) => {
-    const password = 'ilovebackend';
-
-    supertest(index)
+  xit('should respond to POST /user with no email', (done) => {
+    request(app)
       .post('/users')
       .set('Accept', 'application/json')
       .set('Content-Type', 'application/json')
       .send({
-        firstName: 'Paola',
-        lastName: 'Carlos',
+        first_name: 'Paola',
+        last_name: 'Carlos',
+        password: 'iloveservers',
+        weight: 123,
+        user_intentions: 'lose weight'
+      })
+      .expect('Content-Type', 'application/json')
+      .expect(400, JSON.stringify({code: 400, message: "foo"}), done);
+  });
+
+  it('should response to POST /users', (done) => {
+    const password = 'ilovebackend';
+
+    request(app)
+      .post('/users')
+      .set('Accept', 'application/json')
+      .set('Content-Type', 'application/json')
+      .send({
+        first_name: 'Paola',
+        last_name: 'Carlos',
         email: 'paoladatabasequeen@boss.com',
-        password
+        password,
+        weight: 123,
+        user_intentions: 'lose weight'
       })
       .expect((res) => {
         delete res.body.createdAt;
@@ -53,12 +74,15 @@ describe('users routes', () => {
       })
       .expect(200, {
         id: 2,
-        firstName: 'Paola',
-        lastName: 'Carlos',
-        email: 'paoladatabasequeen@boss.com'
+        first_name: 'Paola',
+        last_name: 'Carlos',
+        email: 'paoladatabasequeen@boss.com',
+        weight: 123,
+        user_intentions: 'lose weight'
       })
       .expect('Content-Type', /json/)
       .end((httpErr, _res) => {
+
         if (httpErr) {
           return done(httpErr);
         }
@@ -86,7 +110,7 @@ describe('users routes', () => {
 
             assert.isTrue(isMatch, "passwords don't match");
             done();
-          });
+          })
           .catch((dbErr) => {
             done(dbErr);
           });

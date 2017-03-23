@@ -6,6 +6,7 @@ const ExerciseTypes = require('../../models/exercise_types');
 var url = require('url');
 
 
+
 module.exports.getAllExercises = function(req, res, next) {
   Exercises.where('id', '<', '25').fetchAll({ withRelated: ['muscle', 'type', 'equipment'] })
   .then((exerciseList) => {
