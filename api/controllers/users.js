@@ -8,12 +8,28 @@ const Users = require('../../models/users');
 const ev = require('express-validation');
 
 function addNewUser(req, res) {
-  bcrypt.hash(req.body.password, 12)
+
+  let email = req.body.email;
+  let password = req.body.password;
+
+  // if (!email) {
+  //   res.setHeader("Content-Type", "application/json")
+  //   res.status(400)
+  //   res.end(JSON.stringify({code: 400, message: "foo"}));
+  // // }
+  // if (!password) {
+  //   res.setHeader("Content-Type", "application/json")
+  //   res.status(400)
+  //   res.end(JSON.stringify({code: 400, message: "foo"}));
+  // }
+
+
+  bcrypt.hash(password, 12)
     .then((hashed_password) => {
       return Users.forge({
        first_name: req.body.first_name,
        last_name: req.body.last_name,
-       email: req.body.email,
+       email: email,
        hashed_password: hashed_password,
        weight: req.body.weight,
        user_intentions: req.body.user_intentions
@@ -34,7 +50,6 @@ function addNewUser(req, res) {
 }
 
 function deleteUser (req, res, next) {
-
   Users.where('id', req.swagger.params.id)
     .fetch({require: true})
     .then((user) => {
@@ -47,7 +62,6 @@ function deleteUser (req, res, next) {
     .catch((err) => {
       res.status(500).json({error: true, data: {message: err.message}});
     })
-
 };
 
 module.exports = {

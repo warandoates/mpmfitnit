@@ -7,7 +7,8 @@
     "prestart": "npm install",
     "start": "node app.js",
     "nodemon": "nodemon app.js",
-    "test": "mocha"
+    "test": "mocha",
+    "lint": "eslint"
   },
   "keywords": [
     "swagger"
@@ -32,6 +33,8 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "dotenv": "^4.0.0",
+    "eslint": "^3.18.0",
+    "eslint-config-ryansobol": "^10.0.2",
     "mocha": "^3.2.0",
     "nodemon": "^1.11.0",
     "should": "^7.1.0",
