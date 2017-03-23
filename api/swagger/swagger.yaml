@@ -28,7 +28,7 @@ paths:
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/exercise"
+              type: "object"
         default:
           description: "unexpected error"
           schema:
@@ -56,7 +56,7 @@ paths:
           description: "unexpected error"
           schema:
             $ref: "#/definitions/errorModel"
-      x-swagger-router-controller: "Default"
+      x-swagger-router-controller: "exercises"
   /users:
     # our controller name
     x-swagger-router-controller: "users"
@@ -106,7 +106,7 @@ paths:
           description: "unexpected error"
           schema:
             $ref: "#/definitions/errorModel"
-
+      x-swagger-router-controller: "users"
   /users/{id}:
     get:
       description: "Returns a user information based on a single ID. The user must\
@@ -175,7 +175,7 @@ paths:
           description: "unexpected error"
           schema:
             $ref: "#/definitions/errorModel"
-      x-swagger-router-controller: "Default"
+      x-swagger-router-controller: "users"
   /exercises/types:
     get:
       description: "returns all exercise types"
@@ -192,7 +192,7 @@ paths:
           description: "unexpected error"
           schema:
             $ref: "#/definitions/errorModel"
-      x-swagger-router-controller: "Default"
+      x-swagger-router-controller: "exercises"
   /exercises/types/{id}:
     get:
       description: "Returns specific exercise type based on ID"
@@ -215,7 +215,7 @@ paths:
           description: "unexpected error"
           schema:
             $ref: "#/definitions/errorModel"
-      x-swagger-router-controller: "Default"
+      x-swagger-router-controller: "exercises"
   /equipment:
     get:
       description: "returns all exercise types"
@@ -232,7 +232,7 @@ paths:
           description: "unexpected error"
           schema:
             $ref: "#/definitions/errorModel"
-      x-swagger-router-controller: "Default"
+      x-swagger-router-controller: "equipment"
   /equipment/{id}:
     get:
       description: "Returns specific exercise type based on ID"
@@ -255,7 +255,7 @@ paths:
           description: "unexpected error"
           schema:
             $ref: "#/definitions/errorModel"
-      x-swagger-router-controller: "Default"
+      x-swagger-router-controller: "equipment"
   /muscles:
     get:
       description: "returns all muscle types"
@@ -272,7 +272,7 @@ paths:
           description: "unexpected error"
           schema:
             $ref: "#/definitions/errorModel"
-      x-swagger-router-controller: "Default"
+      x-swagger-router-controller: "muscles"
   /muscles/{id}:
     get:
       description: "Returns specific exercise type based on ID"
@@ -295,15 +295,67 @@ paths:
           description: "unexpected error"
           schema:
             $ref: "#/definitions/errorModel"
-      x-swagger-router-controller: "Default"
+      x-swagger-router-controller: "muscles"
+  /routines:
+    get:
+      description: "returns"
+      produces:
+      - "application/json"
+      operationId: "getRandomRoutines"
+      parameters:
+      - in: query
+        name: muscleGroup
+        description: muscle names to be filtered
+        required: false
+        type: array
+        items:
+          type: string
+        collectionFormat: multi
+      responses:
+        200:
+          description: "produces array of exercise objects"
+          schema:
+            type: "array"
+            items:
+              type: "object"
+              properties:
+                id:
+                  type: "integer"
+                name:
+                  type: "string"
+                type:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "integer"
+                    name:
+                      type: "string"
+                muscle:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "integer"
+                    name:
+                      type: "string"
+                    size:
+                      type: "string"
+                equipment:
+                  type: "object"
+                  properties:
+                    id:
+                      type: "integer"
+                    name:
+                      type: "string"
+        default:
+          description: "unexpected error"
+          schema:
+            $ref: "#/definitions/errorModel"
+      x-swagger-router-controller: "routines"
 definitions:
   exercise:
     type: "object"
     required:
-    - "equipment_type_id"
-    - "exercise_type_id"
     - "id"
-    - "muscle_id"
     - "name"
     properties:
       id:
@@ -311,15 +363,7 @@ definitions:
         format: "int64"
       name:
         type: "string"
-      muscle_id:
-        type: "integer"
-        format: "int64"
-      exercise_type_id:
-        type: "integer"
-        format: "int64"
-      equipment_type_id:
-        type: "integer"
-        format: "int64"
+
   newUser:
     type: "object"
     required:
