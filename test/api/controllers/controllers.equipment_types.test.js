@@ -6,8 +6,8 @@ const {
 } = require('mocha');
 const assert = require('chai').assert;
 const request = require('supertest');
-const knex = require('../knex');
-const index = require('../index');
+const knex = require('../../../knex');
+const index = require('../../../app');
 
 describe('equipment route', () => {
 
@@ -113,14 +113,14 @@ describe('equipment route', () => {
                 .get('/equipment/1')
                 .expect(200, done);
         });
-
+    //
         it('should respond with a Content-Type of application/json', (done) => {
             request(index)
                 .get('/equipment/1')
                 .set('Accept', 'application/json')
                 .expect('Content-Type', /application\/json/, done);
         });
-
+    //
         it('should respond with the specific muscle at position one', (done) => {
             request(index)
                 .get('/equipment/11')
