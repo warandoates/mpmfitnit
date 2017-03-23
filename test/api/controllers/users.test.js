@@ -118,5 +118,5 @@ describe('users routes', () => {
             done(dbErr);
           });
       });
-  });
+    }); // end of test
 });

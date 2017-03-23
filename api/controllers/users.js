@@ -5,17 +5,9 @@
 **/
 const bcrypt = require('bcrypt-as-promised');
 const Users = require('../../models/users');
-
-// const {
-//    camelizeKeys,
-//    decamelizeKeys
-// } = require('humps');
+const ev = require('express-validation');
 
 function addNewUser(req, res) {
-  console.log('add user');
-  // console.log(req.swagger.params.user.value.email);
-  // const newUser = req.swagger.newUser;
-
   bcrypt.hash(req.body.password, 12)
     .then((hashed_password) => {
       return Users.forge({
@@ -30,20 +22,16 @@ function addNewUser(req, res) {
     .then((user) => {
       let u = JSON.parse(JSON.stringify(user));
       delete u.hashed_password;
-      // console.log(u);
       res.setHeader('Content-Type', 'application/json');
       res.end(u);
-
     })
     .catch(function (err) {
       res.setHeader("Content-Type", "application/json")
       res.status(400)
-
       res.end(JSON.stringify({code: 400, message: "foo"}));
     });
   });
 }
-
 
 function deleteUser (req, res, next) {
 
