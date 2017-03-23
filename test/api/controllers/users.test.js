@@ -69,8 +69,6 @@ describe('TESTS FOR USERS ROUTE', () => {
       .expect('Content-Type', /application\/json/)
       .expect(400, /Request validation failed/, done);
   });
-            // .expect(400, JSON.stringify({code: 400, message: "no password"}), done);
-
 
   it('should response to POST /users', (done) => {
     const password = 'ilovebackend';
@@ -140,6 +138,7 @@ describe('TESTS FOR USERS ROUTE', () => {
   }); // end of test for create user /POST
 
   describe('with token', () => {
+    console.log('we are testing patch w/tokens');
     const agent = request.agent(app);
 
     it('should PATCH /users/:id', (done) => {

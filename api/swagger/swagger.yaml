@@ -108,6 +108,7 @@ paths:
             $ref: "#/definitions/errorModel"
       x-swagger-router-controller: "users"
   /users/{id}:
+    x-swagger-router-controller: "users"
     get:
       description: "Returns a user information based on a single ID. The user must\
         \ be authorized to access."
@@ -151,7 +152,7 @@ paths:
       x-swagger-router-controller: "users"
     patch:
       description: "updates specified properties of the specific user."
-      operationId: "patchUserProfile"
+      operationId: "updateUser"
       produces:
       - "application/json"
       parameters:
@@ -163,7 +164,7 @@ paths:
         format: "int64"
       - in: "body"
         name: "jsonPatch"
-        required: true
+        # required: false
         schema:
           $ref: "#/definitions/updateUser"
       responses:
@@ -171,11 +172,14 @@ paths:
           description: "user profile response"
           schema:
             $ref: "#/definitions/user"
+        400:
+          description: "You didn't update a user"
+          schema:
+            $ref: "#/definitions/errorModel"
         default:
           description: "unexpected error"
           schema:
             $ref: "#/definitions/errorModel"
-      x-swagger-router-controller: "users"
   /token:
     x-swagger-router-controller: "token"
     post:
@@ -435,14 +439,7 @@ definitions:
         type: "string"
   user:
     type: "object"
-    required:
-    - "email"
-    - "first_name"
-    - "id"
-    - "last_name"
-    # - "hashed_password"
-    - "weight"
-    - "user_intentions"
+
     properties:
       id:
         type: "integer"
@@ -453,8 +450,8 @@ definitions:
         type: "string"
       email:
         type: "string"
-      hashed_password:
-        type: "string"
+      # hashed_password:
+      #   type: "string"
       weight:
         type: "integer"
         format: "int32"
