@@ -4,9 +4,9 @@ const cookieParser = require('cookie-parser');
 
 const JWT = require('jsonwebtoken');
 
-const cert = process.env.JWT;
+const cert = process.env.JWT_KEY;
 
-let createUserToken = function (req, res, next) {
+module.exports.createUserToken = function (req, res, next) {
   console.log("im here");
   return Users.where('email', '=', req.body.email).fetch()
 .then((userInfo) => {
@@ -30,5 +30,10 @@ let createUserToken = function (req, res, next) {
   });
   res.cookie('token', token, { path: '/', httpOnly: true });
   res.send('successful operation');
+})
+.catch((err) => {
+  if (err) {
+    throw err;
+  }
 });
 };
