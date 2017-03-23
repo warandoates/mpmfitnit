@@ -37,7 +37,7 @@ describe('users routes', () => {
   });
 
   // test the POST method on users
-  xit('should respond to POST /user with no email', (done) => {
+  it('should respond to POST /user with no email', (done) => {
     request(app)
       .post('/users')
       .set('Accept', 'application/json')
@@ -68,9 +68,9 @@ describe('users routes', () => {
         weight: 123,
         user_intentions: 'lose weight'
       })
-      .expect((res) => {
-        delete res.body.createdAt;
-        delete res.body.updatedAt;
+      .expect( (user) => {
+        delete user.body.created_at;
+        delete user.body.updated_at;
       })
       .expect(200, {
         id: 2,
@@ -91,7 +91,8 @@ describe('users routes', () => {
           .where('id', 2)
           .first()
           .then((user) => {
-            const hashedPassword = user.hashed_password;
+
+            const hashed_password = user.hashed_password;
 
             delete user.hashed_password;
             delete user.created_at;
@@ -100,9 +101,11 @@ describe('users routes', () => {
             assert.deepEqual(user,
               {
                 id: 2,
-                firstName: 'Paola',
-                lastName: 'Carlos',
-                email: 'paoladatabasequeen@boss.com'
+                first_name: 'Paola',
+                last_name: 'Carlos',
+                email: 'paoladatabasequeen@boss.com',
+                weight: 123,
+                user_intentions: 'lose weight'
               });
 
             // Synchronous password comparison

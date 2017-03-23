@@ -397,7 +397,7 @@ definitions:
     - "first_name"
     - "id"
     - "last_name"
-    - "hashed_password"
+    # - "hashed_password"
     - "weight"
     - "user_intentions"
     properties:
