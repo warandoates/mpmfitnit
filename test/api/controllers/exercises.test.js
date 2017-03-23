@@ -9,7 +9,7 @@ const {
 const assert = require('chai').assert;
 const request = require('supertest');
 const knex = require('../../../knex');
-const index = require('../../../app');
+const app = require('../../../app');
 
 describe('exercises route', () => {
 
@@ -36,13 +36,13 @@ describe('exercises route', () => {
 
     describe('GET /excercises', () => {
         it('should respond with a status code of 200', (done) => {
-            request(index)
+            request(app)
                 .get('/exercises')
                 .expect(200, done);
         });
 
         it('should respond with a Content-Type of application/json', (done) => {
-            request(index)
+            request(app)
                 .get('/exercises')
                 .set('Accept', 'application/json')
                 .expect('Content-Type', /application\/json/, done);
@@ -51,20 +51,27 @@ describe('exercises route', () => {
 
     describe('GET /exercises/{id}', () => {
         it('should respond with a status code of 200', (done) => {
-            request(index)
+            request(app)
                 .get('/exercises/1')
                 .expect(200, done);
         });
 
         it('should respond with a Content-Type of application/json', (done) => {
-            request(index)
+            request(app)
                 .get('/exercises/1')
                 .set('Accept', 'application/json')
                 .expect('Content-Type', /application\/json/, done);
         });
 
+        it('should return a 404 error if app position does not exists', (done) => {
+          request(app)
+            .get('/exercises/20000')
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /plain/, done);
+        });
+
         it('should respond with the specific exercise at position one', (done) => {
-            request(index)
+            request(app)
                 .get('/exercises/1')
                 .set('Accept', 'application/json')
                 .expect({
@@ -88,20 +95,20 @@ describe('exercises route', () => {
     });
     describe('GET /exercises/types', () => {
         it('should respond with a status code of 200', (done) => {
-            request(index)
+            request(app)
                 .get('/exercises/types')
                 .expect(200, done);
         });
 
         it("should respond with content-type of application/json", (done) => {
-            request(index)
+            request(app)
                 .get('/exercises/types')
                 .set('Accept', 'application/json')
                 .expect('Content-Type', /application\/json/, done);
         });
 
         it('should respond with an array of all exercise types', (done) => {
-            request(index)
+            request(app)
                 .get('/exercises/types')
                 .set('Accept', 'application/json')
                 .expect([{
@@ -138,20 +145,20 @@ describe('exercises route', () => {
 
     describe('GET /exercises/types/:id', () => {
         it('should respond with a status code of 200', (done) => {
-            request(index)
+            request(app)
                 .get('/exercises/types/7')
                 .expect(200, done);
         });
 
         it("should respond with content-type of application/json", (done) => {
-            request(index)
+            request(app)
                 .get('/exercises/types/7')
                 .set('Accept', 'application/json')
                 .expect('Content-Type', /application\/json/, done);
         });
 
         it('should respond with exercise type object with an id of 7', (done) => {
-            request(index)
+            request(app)
                 .get('/exercises/types/7')
                 .set('Accept', 'application/json')
                 .expect({
