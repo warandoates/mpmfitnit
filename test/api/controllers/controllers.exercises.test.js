@@ -68,23 +68,20 @@ describe('exercises route', () => {
                 .get('/exercises/1')
                 .set('Accept', 'application/json')
                 .expect({
-                    "id": 1,
-                    "name": "Bear Crawl Fire Feet",
-                    "muscle_id": 12,
-                    "exercise_type_id": 1,
-                    "equipment_type_id": 5,
-                    "type": {
-                        "id": 1,
-                        "name": "Cardio"
+                    id: 1,
+                    name: 'Bear Crawl Fire Feet',
+                    muscle: {
+                        id: 12,
+                        name: 'Shoulders',
+                        size: 'small'
                     },
-                    "muscle": {
-                        "id": 12,
-                        "name": "Shoulders",
-                        "size": "small"
+                    equipment: {
+                        id: 5,
+                        name: 'Body Only'
                     },
-                    "equipment": {
-                        "id": 5,
-                        "name": "Body Only"
+                    type: {
+                        id: 1,
+                        name: 'Cardio'
                     }
                 }, done);
         });
