@@ -176,23 +176,24 @@ paths:
           schema:
             $ref: "#/definitions/errorModel"
       x-swagger-router-controller: "users"
-  /users/login:
-    get:
-      description: "Logs user into the system"
-      operationId: userLogin
+  /token:
+    post:
+      description: "Establishes token for specific user"
+      operationId: "createUserToken"
       produces:
         - application/json
       parameters:
-        - name: "email"
-          in: "query"
-          description: "the email for logging in"
-          required: false
-          type: "string"
-        - name: "password"
-          in: "query"
-          description: "The password for logging in"
-          required: false
-          type: string
+      - name: "email and password"
+        in: "body"
+        description: "user email and password"
+        required: true
+        schema:
+          type: "object"
+          properties:
+            email:
+              type: "string"
+            password:
+              type: "string"
       responses:
         "200":
           description: "successful operation"
@@ -200,6 +201,7 @@ paths:
             type: "string"
         "400":
           description: "Invalid email or password"
+      x-swagger-router-controller: "token"
   /exercises/types:
     get:
       description: "returns all exercise types"
