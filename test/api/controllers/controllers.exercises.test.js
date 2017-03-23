@@ -6,8 +6,8 @@ const {
 } = require('mocha');
 const assert = require('chai').assert;
 const request = require('supertest');
-const knex = require('../knex');
-const index = require('../index');
+const knex = require('../../../knex');
+const index = require('../../../app');
 
 describe('exercises route', () => {
 

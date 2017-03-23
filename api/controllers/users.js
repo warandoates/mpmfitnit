@@ -5,45 +5,47 @@
 **/
 const bcrypt = require('bcrypt-as-promised');
 const Users = require('../../models/users');
-const {
-   camelizeKeys,
-   decamelizeKeys
-} = require('humps');
 
-function addNewUser(req, res, next) {
+// const {
+//    camelizeKeys,
+//    decamelizeKeys
+// } = require('humps');
 
-  const newUser = req.swagger.newUser;
-  console.log(newUser);
+function addNewUser(req, res) {
+  console.log('add user');
+  // console.log(req.swagger.params.user.value.email);
+  // const newUser = req.swagger.newUser;
 
-  // const firstName = .firstName;
-  const lastName = req.body.lastName;
-  const email = req.body.email;
-  const password = req.body.password;
-  const weight = req.body.weight;
-  const intentions = req.body.intentions;
-
-  // bcrypt.hash(password, 12)
-  //   .then((hashed_password) => {
-  //     return
-    Users.forge({
-       first_name: firstName,
-       last_name: lastName,
-       email: email,
+  bcrypt.hash(req.body.password, 12)
+    .then((hashed_password) => {
+      console.log(hashed_password);
+      return Users.forge({
+       first_name: req.body.first_name,
+       last_name: req.body.last_name,
+       email: req.body.email,
        hashed_password: hashed_password,
-       weight: weight,
-       intentions: intentions
+       weight: req.body.weight,
+       user_intentions: req.body.user_intentions
     })
     .save()
     .then((user) => {
       delete user.hashed_password;
+      return user;
+    })
+    .then((user) => {
+      console.log(user);
       res.setHeader('Content-Type', 'application/json');
       res.end(JSON.stringify(user));
+
     })
     .catch(function (err) {
-      res.status(500).json({error: true, data: {message: err.message}});
-      // next(err);
+      res.setHeader("Content-Type", "application/json")
+      res.status(400)
+
+      res.end(JSON.stringify({code: 400, message: "foo"}));
     });
-};
+  });
+}
 
 
 function deleteUser (req, res, next) {

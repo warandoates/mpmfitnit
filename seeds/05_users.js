@@ -4,8 +4,7 @@ exports.seed = function(knex, Promise) {
   return knex('users').del()
     .then(function () {
       // Inserts seed entries
-      return knex('users').insert([
-        {
+      return knex('users').insert([{
           id: 1,
           first_name: 'Mary',
           last_name: 'Lai',
@@ -15,7 +14,9 @@ exports.seed = function(knex, Promise) {
           user_intentions: 'I want to gain muscle',
           created_at: new Date('2017-03-20 12:12:12 UTC'),
           updated_at: new Date('2017-03-20 12:12:12 UTC')
-        }
-      ]);
-    });
+        }]);
+      })
+      .then(() => {
+            return knex.raw("SELECT setval('users_id_seq', (SELECT MAX(id) FROM users))");
+          });
 };
