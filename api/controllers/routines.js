@@ -27,6 +27,17 @@ function getExercisesByGroup(numOfExercises, idInString) {
             throw err;
         });
 }
+let bicAndForamsRoutine = function () {
+  return Promise.all([getExercisesByGroup(3, '7'), getExercisesByGroup(1, '13')])
+  .then(([resultBiceps, resultForArms]) => {
+    let newArray = resultBiceps.concat(resultForArms);
+    console.log(newArray);
+    return newArray;
+  })
+  .catch((err) => {
+    throw err;
+  });
+};
 
 
 module.exports.getRandomRoutines = function(req, res, next) {
@@ -45,31 +56,17 @@ module.exports.getRandomRoutines = function(req, res, next) {
           res.setHeader('Content-Type', 'application/json');
           return res.end(JSON.stringify(response));
         });
-      }
-        // console.log("this is log", JSON.stringify(getExercisesByGroup(3, '16')));
-  // console.log(getExercisesByGroup(3, '16'));
-    // let muscleGroup = req.swagger.params.muscleGroup.value;
-    // // console.log(muscleGroup);
-    // if (muscleGroup == "triceps") {
-    //     res.setHeader('Content-Type', 'application/json');
-    //     // console.log(JSON.stringify(getExercisesByGroup(3, '16')));
-    //     return res.end(JSON.stringify(getExercisesByGroup(3, '16')));
-    //     // res.send(getExercisesByGroup(3, '16'));
-    // } else {
-    //     res.json('false')
-    // }
-    // let arr = [];
-    // let val = muscleGroup[0];
-    // let obj = {
-    //   thisProp: val
-    // };
-    // let jsonedObjs = JSON.stringify(obj)
-    //
-    // arr.push(jsonedObjs);
-    // console.log(arr);
-    // res.json(getExercisesByGroup(3, '16'));
-
-    // res.json('false')
-
-    // next();
+      } else if(muscleGroup.toString() === 'shoulders') {
+        return getExercisesByGroup(4, '12')
+        .then((response) => {
+          res.setHeader('Content-Type', 'application/json');
+          return res.end(JSON.stringify(response));
+      })
+    } else if(muscleGroup.toString() === 'biceps') {
+      return bicAndForamsRoutine()
+      .then((response) => {
+        res.setHeader('Content-Type', 'application/json');
+        return res.end(JSON.stringify(response));
+    })
+  }
 };
