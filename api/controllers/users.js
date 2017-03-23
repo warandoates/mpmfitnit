@@ -18,7 +18,6 @@ function addNewUser(req, res) {
 
   bcrypt.hash(req.body.password, 12)
     .then((hashed_password) => {
-      console.log(hashed_password);
       return Users.forge({
        first_name: req.body.first_name,
        last_name: req.body.last_name,
@@ -29,13 +28,11 @@ function addNewUser(req, res) {
     })
     .save()
     .then((user) => {
-      delete user.hashed_password;
-      return user;
-    })
-    .then((user) => {
-      console.log(user);
+      let u = JSON.parse(JSON.stringify(user));
+      delete u.hashed_password;
+      // console.log(u);
       res.setHeader('Content-Type', 'application/json');
-      res.end(JSON.stringify(user));
+      res.end(u);
 
     })
     .catch(function (err) {
