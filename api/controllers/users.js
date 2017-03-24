@@ -5,9 +5,10 @@
  **/
 const bcrypt = require('bcrypt-as-promised');
 const Users = require('../../models/users');
-// const ev = require('express-validation');
+const jwt = require('jsonwebtoken');
 
 function addNewUser(req, res) {
+
     let email = req.body.email;
     let password = req.body.password;
 
@@ -110,26 +111,29 @@ function updateUser(req, res) {
 };
 
 function deleteUser(req, res) {
-  Users.where({id: req.swagger.params.id.value})
-        .fetch({require: true})
-        .then((user) => {
-          console.log('hey');
-            user.destroy()
-            return user;
-        })
-        .then((user) => {
-          let u = JSON.parse(JSON.stringify(user));
-          delete u.hashed_password;
-          res.setHeader('Content-Type', 'application/json');
-          res.send(u);
-        })
-        .catch(function(err) {
-            res.setHeader("Content-Type", "application/json")
-            res.status(400).json({
-                code: 400,
-                message: "foo"
-            });
-        });
+  const token = req.headers['token'];
+  jwt.verify(token, process.env.JWT_KEY, (err, payload) => {
+        Users.where({id: req.swagger.params.id.value})
+              .fetch({require: true})
+              .then((user) => {
+                console.log('hey');
+                  user.destroy()
+                  return user;
+              })
+              .then((user) => {
+                let u = JSON.parse(JSON.stringify(user));
+                delete u.hashed_password;
+                res.setHeader('Content-Type', 'application/json');
+                res.send(u);
+              })
+              .catch(function(err) {
+                  res.setHeader("Content-Type", "application/json")
+                  res.status(400).json({
+                      code: 400,
+                      message: "foo"
+                  });
+              });
+  });          
 };
 
 module.exports = {
