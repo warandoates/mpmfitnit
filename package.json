@@ -35,8 +35,7 @@
     "pg": "^6.1.4",
     "swagger-express-mw": "^0.1.0",
     "swagger-tools": "^0.10.1",
-    "swagger-ui": "^3.0.2",
-    "webpack": "^2.3.1"
+    "swagger-ui": "^3.0.2"
   },
   "devDependencies": {
     "chai": "^3.5.0",
