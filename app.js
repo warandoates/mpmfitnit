@@ -6,7 +6,11 @@ if (process.env.NODE_ENV !== 'production') {
 
 var SwaggerExpress = require('swagger-express-mw');
 var app = require('express')();
+const cors = require('cors');
 
+const path = require('path');
+app.use(express.static(path.join('public')));
+app.use(cors());
 
 var config = {
   appRoot: __dirname // required config
