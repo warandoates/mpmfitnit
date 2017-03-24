@@ -19,14 +19,10 @@ module.exports.getAllExercises = function(req, res, next) {
   });
 };
 
-
-
 module.exports.findExerciseById = function(req, res, next) {
   Exercises.where('id', req.swagger.params.id.value).fetch({ withRelated: ['muscle', 'type', 'equipment'] })
   .then((specificExercise) => {
     if(!specificExercise) {
-      console.log(specificExercise);
-      console.log(!specificExercise);
       res.sendStatus(404);
       return next();
     }
@@ -34,7 +30,7 @@ module.exports.findExerciseById = function(req, res, next) {
     res.end(JSON.stringify(specificExercise));
   })
   .catch((err) => {
-    console.log(err);
+
     // res.sendStatus(404);
     next(err);
   });
@@ -56,10 +52,3 @@ module.exports.getExerciseTypeById = function(req, res, next) {
         res.json(response);
       })
 };
-
-// module.exports = {
-//   getAllExercises: getAllExercises,
-//   findExerciseById: findExerciseById,
-//   getAllExerciseTypes: getAllExerciseTypes,
-//   getExerciseTypeById: getExerciseTypeById
-// };

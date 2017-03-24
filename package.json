@@ -7,7 +7,7 @@
     "prestart": "npm install",
     "start": "node app.js",
     "nodemon": "nodemon app.js",
-    "test": "mocha",
+    "test": "istanbul cover _mocha -- -R spec",
     "lint": "eslint"
   },
   "keywords": [
@@ -23,6 +23,7 @@
     "express": "^4.12.3",
     "express-validation": "^1.0.2",
     "humps": "^2.0.0",
+    "istanbul": "^0.4.5",
     "joi": "^10.2.2",
     "js-yaml": "^3.3.0",
     "jsonwebtoken": "^7.3.0",

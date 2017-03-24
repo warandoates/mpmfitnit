@@ -60,13 +60,17 @@ let bicAndForamsRoutine = function() {
         });
 };
 
+function routinesAndYoutubeResponse(muscle, int, intString) {
+    return Promise.all([letsFetchSomeClips(muscle), getExercisesByGroup(int, intString)]);
+}
+
 
 module.exports.getRandomRoutines = function(req, res, next) {
-    let muscleGroup = req.swagger.params.muscleGroup.value;
-    let newArray;
-    switch (muscleGroup.toString()) {
+    let muscleGroup = req.swagger.params.muscleGroup.value.toString();
+    let newArray = [];
+    switch (muscleGroup) {
         case 'triceps':
-            return Promise.all([letsFetchSomeClips('triceps'), getExercisesByGroup(3, '16')])
+            return routinesAndYoutubeResponse(muscleGroup, 3, '16')
                 .then(([apiRes, exerciseRes]) => {
                     newArray = exerciseRes.concat(apiRes);
                     res.setHeader('Content-Type', 'application/json');
@@ -74,7 +78,7 @@ module.exports.getRandomRoutines = function(req, res, next) {
                 });
             break;
         case 'chest':
-            return Promise.all([letsFetchSomeClips('chest'), getExercisesByGroup(4, '11')])
+            return routinesAndYoutubeResponse(muscleGroup, 4, '11')
                 .then(([apiRes, exerciseRes]) => {
                     newArray = exerciseRes.concat(apiRes);
                     res.setHeader('Content-Type', 'application/json');
@@ -82,15 +86,15 @@ module.exports.getRandomRoutines = function(req, res, next) {
                 });
             break;
         case 'shoulders':
-        return Promise.all([letsFetchSomeClips('shoulders'), getExercisesByGroup(4, '12')])
-            .then(([apiRes, exerciseRes]) => {
-                newArray = exerciseRes.concat(apiRes);
-                res.setHeader('Content-Type', 'application/json');
-                return res.end(JSON.stringify(newArray));
-            });
+            return routinesAndYoutubeResponse(muscleGroup, 4, '12')
+                .then(([apiRes, exerciseRes]) => {
+                    newArray = exerciseRes.concat(apiRes);
+                    res.setHeader('Content-Type', 'application/json');
+                    return res.end(JSON.stringify(newArray));
+                });
             break;
         case 'biceps':
-            return Promise.all([letsFetchSomeClips('biceps'), bicAndForamsRoutine()])
+            return Promise.all([letsFetchSomeClips(muscleGroup), bicAndForamsRoutine()])
                 .then(([apiRes, exerciseRes]) => {
                     newArray = exerciseRes.concat(apiRes);
                     res.setHeader('Content-Type', 'application/json');
@@ -98,6 +102,10 @@ module.exports.getRandomRoutines = function(req, res, next) {
                 })
             break;
         default:
-            return 'oh no';
+            res.setHeader("Content-Type", "application/json")
+            res.status(404).json({
+                code: 404,
+                message: "Not Found"
+            });
     }
 };

@@ -63,13 +63,6 @@ describe('exercises route', () => {
                 .expect('Content-Type', /application\/json/, done);
         });
 
-        it('should return a 404 error if app position does not exists', (done) => {
-          request(app)
-            .get('/exercises/20000')
-            .set('Accept', 'application/json')
-            .expect('Content-Type', /plain/, done);
-        });
-
         it('should respond with the specific exercise at position one', (done) => {
             request(app)
                 .get('/exercises/1')
