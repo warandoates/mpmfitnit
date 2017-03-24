@@ -410,58 +410,30 @@ definitions:
       id:
         type: "integer"
         format: "int64"
+        minimum: 2
       name:
-        type: "string"
-
-  newUser:
-    type: "object"
-    required:
-    - "email"
-    - "first_name"
-    - "last_name"
-    - "password"
-    - "weight"
-    - "user_intentions"
-    properties:
-      # id:
-      #   type: "integer"
-      #   format: "int64"
-      first_name:
-        type: "string"
-      last_name:
-        type: "string"
-      email:
-        type: "string"
-      password:
-        type: "string"
-      weight:
-        type: "integer"
-        format: "int32"
-      user_intentions:
         type: "string"
   user:
     type: "object"
     properties:
       id:
         type: "integer"
-        # format: "int64"
+        minimum: 1
       first_name:
         type: "string"
       last_name:
         type: "string"
       email:
         type: "string"
-      # hashed_password:
-      #   type: "string"
+        format: email      
       weight:
         type: "integer"
         format: "int32"
+        minimum: 1
       user_intentions:
         type: "string"
   updateUser:
     type: "object"
-    # required:
-    # - "password"
     properties:
       first_name:
         type: "string"
@@ -469,11 +441,11 @@ definitions:
         type: "string"
       email:
         type: "string"
-      # password:
-      #   type: "string"
+        format: "email"
       weight:
         type: "integer"
         format: "int32"
+        minimum: 1
       user_intentions:
         type: "string"
   exercise_types:
@@ -485,6 +457,7 @@ definitions:
       id:
         type: "integer"
         format: "int64"
+        minimum: 1
       name:
         type: "string"
   equipment:
@@ -496,6 +469,7 @@ definitions:
       id:
         type: "integer"
         format: "int64"
+        minimum: 1
       name:
         type: "string"
   muscles:
@@ -508,6 +482,7 @@ definitions:
       id:
         type: "integer"
         format: "int64"
+        minimum: 1
       name:
         type: "string"
       size:
@@ -515,11 +490,7 @@ definitions:
   errorModel:
     type: "object"
     required:
-    # - "code"
     - "message"
     properties:
-      # code:
-      #   type: "integer"
-      #   format: "int32"
       message:
         type: "string"
