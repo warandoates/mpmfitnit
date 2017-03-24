@@ -5,6 +5,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 var SwaggerExpress = require('swagger-express-mw');
+const express = require('express');
 var app = require('express')();
 const cors = require('cors');
 
