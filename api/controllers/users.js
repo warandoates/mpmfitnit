@@ -41,36 +41,60 @@ function addNewUser(req, res) {
 }
 
 function updateUser(req, res, next) {
-  console.log('hi im here');
   const id = req.swagger.params.id.value;
-  console.log(id);
-    return Users.forge({id: id})
-      .fetch({require: true})
-      .then((user) => {
-        user.save({
-          first_name: req.body.first_name || user.get('first_name'),
-          last_name: req.body.last_name || user.get('last_name'),
-          email: req.body.email || user.get('email'),
-          weight: req.body.weight || user.get('weight'),
-          user_intentions: req.body.user_intentions || user.get('user_intentions'),
-          hashed_password: req.body.password || user.get('hashed_password')
-        })
-      .then((user) => {
-        console.log(user);
-        let u = JSON.parse(JSON.stringify(user));
-        console.log(u);
-        delete u.hashed_password;
-        res.setHeader('Content-Type', 'application/json');
-        res.send(u);
-      })
-      .catch(function(err) {
-              res.setHeader("Content-Type", "application/json")
-              res.status(400).json({
-                  code: 400,
-                  message: "foo"
-              });
+  return Users.where('id', '=', id)
+  .fetch()
+  .then((user) => {
+    console.log(user);
+    let userToUpdate = {}
+    if (req.body.first_name) {
+        userToUpdate.first_name = req.body.first_name;
+    }
+    if (req.body.last_name) {
+      userToUpdate.last_name = req.body.last_name;
+    }
+    if (req.body.email) {
+      userToUpdate.email = req.body.email;
+    }
+    if (req.body.weight) {
+      userToUpdate.weight = req.body.weight;
+    }
+    if (req.body.user_intentions) {
+      userToUpdate.user_intentions = req.body.user_intentions;
+    }
+    return user.save({ userToUpdate }, { patch: true });
+  })
+  .then((userUpdated) => {
+    console.log('user changed info: ', userUpdated);
+    console.log(JSON.parse(JSON.stringify(userUpdated)));
+    return JSON.parse(JSON.stringify(userUpdated));
+  })
+    .catch(function(err) {
+      res.setHeader("Content-Type", "application/json");
+      res.status(400).json({
+        code: 400,
+        message: 'foo'
       });
     });
+};
+
+
+  //   user.save({
+  //     first_name: req.body.first_name || user.get('first_name'),
+  //     last_name: req.body.last_name || user.get('last_name'),
+  //     email: req.body.email || user.get('email'),
+  //     weight: req.body.weight || user.get('weight'),
+  //     user_intentions: req.body.user_intentions || user.get('user_intentions'),
+  //     hashed_password: req.body.password || user.get('hashed_password')
+  //   }, {patch: true})
+  // .then((user) => {
+  //   console.log(user);
+  //   let u = JSON.parse(JSON.stringify(user));
+  //   console.log(u);
+  //   delete u.hashed_password;
+  //   res.setHeader('Content-Type', 'application/json');
+  //   res.send(u);
+  // })
 
     // return Users.where('id', '=', id)
     //     .fetch()
@@ -111,7 +135,7 @@ function updateUser(req, res, next) {
     //             message: "foo"
     //         });
     //     });
-};
+// };
 
 function deleteUser(req, res, next) {
     Users.where('id', req.swagger.params.id)
