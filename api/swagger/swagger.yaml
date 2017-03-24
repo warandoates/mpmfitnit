@@ -143,8 +143,14 @@ paths:
         type: "integer"
         format: "int32"
       responses:
-        204:
+        400:
+          description: "You didn't make a user"
+          schema:
+            $ref: "#/definitions/errorModel"
+        200:
           description: "user deleted"
+          schema:
+            $ref: "#/definitions/user"
         default:
           description: "unexpected error"
           schema:
@@ -172,10 +178,6 @@ paths:
           description: "user profile response"
           schema:
             $ref: "#/definitions/user"
-        400:
-          description: "You didn't update a user"
-          schema:
-            $ref: "#/definitions/errorModel"
         default:
           description: "unexpected error"
           schema:
@@ -439,7 +441,6 @@ definitions:
         type: "string"
   user:
     type: "object"
-
     properties:
       id:
         type: "integer"
@@ -459,8 +460,8 @@ definitions:
         type: "string"
   updateUser:
     type: "object"
-    required:
-    - "password"
+    # required:
+    # - "password"
     properties:
       first_name:
         type: "string"

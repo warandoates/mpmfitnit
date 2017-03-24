@@ -8,10 +8,8 @@ const Users = require('../../models/users');
 // const ev = require('express-validation');
 
 function addNewUser(req, res) {
-
     let email = req.body.email;
     let password = req.body.password;
-
 
     bcrypt.hash(password, 12)
         .then((hashed_password) => {
@@ -40,21 +38,60 @@ function addNewUser(req, res) {
         });
 }
 
-function updateUser(req, res, next) {
+function updateUser(req, res) {
   console.log('hi im here');
+
   const id = req.swagger.params.id.value;
   console.log(id);
-    return Users.forge({id: id})
-      .fetch({require: true})
-      .then((user) => {
-        user.save({
-          first_name: req.body.first_name || user.get('first_name'),
-          last_name: req.body.last_name || user.get('last_name'),
-          email: req.body.email || user.get('email'),
-          weight: req.body.weight || user.get('weight'),
-          user_intentions: req.body.user_intentions || user.get('user_intentions'),
-          hashed_password: req.body.password || user.get('hashed_password')
-        })
+
+  if (id < 0 || Number.isNaN(id)) {
+    return res.status(400).json({
+        code: 400,
+        message: "foo"
+    })
+  }
+
+  let first_name = req.body.first_name;
+  let last_name = req.body.last_name;
+  let email = req.body.email;
+  let weight = req.body.weight;
+  let user_intentions = req.body.user_intentions;
+
+  let hash;
+
+  if (req.body.password) {
+        bcrypt.hash(req.body.password, 12)
+          .then((hashed_password) => {
+            hash = hashed_password;
+          })
+  }
+
+  if (!first_name && !last_name && !email && !weight && !user_intentions && !password) {
+      return res.sendStatus(400);
+  }
+
+  let updatedUser = {};
+  if (first_name) {
+    updatedUser.first_name = first_name;
+  }
+  if (last_name) {
+    updatedUser.last_name = last_name;
+  }
+  if (email) {
+    updatedUser.email = email;
+  }
+  if (weight) {
+    updatedUser.weight = weight;
+  }
+  if (req.body.password) {
+    updatedUser.hashed_password = hash;
+  }
+  if (user_intentions) {
+    updatedUser.user_intentions = user_intentions;
+  }
+
+  return Users.where({id: id})
+      .save(updatedUser, {patch: true})
       .then((user) => {
         console.log(user);
         let u = JSON.parse(JSON.stringify(user));
@@ -70,74 +107,29 @@ function updateUser(req, res, next) {
                   message: "foo"
               });
       });
-    });
-
-    // return Users.where('id', '=', id)
-    //     .fetch()
-    //     .then((user) =>{
-    //       if (!user) {
-    //         return next();
-    //       }
-    //       return JSON.parse(JSON.stringify(user));
-    //     })
-    //     .save(
-    //       {
-    //         first_name: req.body.first_name || user.get('first_name'),
-    //         last_name: req.body.last_name || user.get('last_name'),
-    //         email: req.body.email || user.get('email'),
-    //         weight: req.body.weight || user.get('weight'),
-    //         user_intentions: req.body.user_intentions || user.get('user_intentions'),
-    //         hashed_password: req.body.password || user.get('hashed_password')
-    //       },
-    //      {
-    //         patch: true
-    //     })
-    //     .then((userResponse) => {
-    //       console.log('i am user response',userResponse);
-    //         let user = JSON.parse(JSON.stringify(userResponse));
-    //         delete user.hashed_password;
-    //         // if(req.body.first_name) {
-    //         //   user.first_name = req.body.first_name
-    //         // }
-    //       console.log(user);
-    //     })
-    //     .then((user) => {
-    //
-    //     })
-    //     .catch(function(err) {
-    //         res.setHeader("Content-Type", "application/json")
-    //         res.status(400).json({
-    //             code: 400,
-    //             message: "foo"
-    //         });
-    //     });
 };
 
-function deleteUser(req, res, next) {
-    Users.where('id', req.swagger.params.id)
-        .fetch({
-            require: true
-        })
+function deleteUser(req, res) {
+  Users.where({id: req.swagger.params.id.value})
+        .fetch({require: true})
         .then((user) => {
+          console.log('hey');
             user.destroy()
             return user;
         })
-        .then(() => {
-            res.json({
-                error: true,
-                data: {
-                    message: 'User sucessfully deleted'
-                }
-            });
+        .then((user) => {
+          let u = JSON.parse(JSON.stringify(user));
+          delete u.hashed_password;
+          res.setHeader('Content-Type', 'application/json');
+          res.send(u);
         })
-        .catch((err) => {
-            res.status(500).json({
-                error: true,
-                data: {
-                    message: err.message
-                }
+        .catch(function(err) {
+            res.setHeader("Content-Type", "application/json")
+            res.status(400).json({
+                code: 400,
+                message: "foo"
             });
-        })
+        });
 };
 
 module.exports = {
