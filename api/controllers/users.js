@@ -42,100 +42,28 @@ function addNewUser(req, res) {
 
 function updateUser(req, res, next) {
   const id = req.swagger.params.id.value;
-  return Users.where('id', '=', id)
+  return new Users({ id })
   .fetch()
   .then((user) => {
-    console.log(user);
-    let userToUpdate = {}
-    if (req.body.first_name) {
-        userToUpdate.first_name = req.body.first_name;
-    }
-    if (req.body.last_name) {
-      userToUpdate.last_name = req.body.last_name;
-    }
-    if (req.body.email) {
-      userToUpdate.email = req.body.email;
-    }
-    if (req.body.weight) {
-      userToUpdate.weight = req.body.weight;
-    }
-    if (req.body.user_intentions) {
-      userToUpdate.user_intentions = req.body.user_intentions;
-    }
-    return user.save({ userToUpdate }, { patch: true });
+    return user.save(req.body, { patch: true });
   })
   .then((userUpdated) => {
-    console.log('user changed info: ', userUpdated);
-    console.log(JSON.parse(JSON.stringify(userUpdated)));
-    return JSON.parse(JSON.stringify(userUpdated));
+    let u = JSON.parse(JSON.stringify(userUpdated));
+    delete u.hashed_password;
+    delete u.created_at;
+    delete u.updated_at;
+    console.log('user changed info: ', u);
+    return res.json(u);
   })
-    .catch(function(err) {
-      res.setHeader("Content-Type", "application/json");
-      res.status(400).json({
-        code: 400,
-        message: 'foo'
-      });
-    });
-};
-
-
-  //   user.save({
-  //     first_name: req.body.first_name || user.get('first_name'),
-  //     last_name: req.body.last_name || user.get('last_name'),
-  //     email: req.body.email || user.get('email'),
-  //     weight: req.body.weight || user.get('weight'),
-  //     user_intentions: req.body.user_intentions || user.get('user_intentions'),
-  //     hashed_password: req.body.password || user.get('hashed_password')
-  //   }, {patch: true})
-  // .then((user) => {
-  //   console.log(user);
-  //   let u = JSON.parse(JSON.stringify(user));
-  //   console.log(u);
-  //   delete u.hashed_password;
-  //   res.setHeader('Content-Type', 'application/json');
-  //   res.send(u);
-  // })
-
-    // return Users.where('id', '=', id)
-    //     .fetch()
-    //     .then((user) =>{
-    //       if (!user) {
-    //         return next();
-    //       }
-    //       return JSON.parse(JSON.stringify(user));
-    //     })
-    //     .save(
-    //       {
-    //         first_name: req.body.first_name || user.get('first_name'),
-    //         last_name: req.body.last_name || user.get('last_name'),
-    //         email: req.body.email || user.get('email'),
-    //         weight: req.body.weight || user.get('weight'),
-    //         user_intentions: req.body.user_intentions || user.get('user_intentions'),
-    //         hashed_password: req.body.password || user.get('hashed_password')
-    //       },
-    //      {
-    //         patch: true
-    //     })
-    //     .then((userResponse) => {
-    //       console.log('i am user response',userResponse);
-    //         let user = JSON.parse(JSON.stringify(userResponse));
-    //         delete user.hashed_password;
-    //         // if(req.body.first_name) {
-    //         //   user.first_name = req.body.first_name
-    //         // }
-    //       console.log(user);
-    //     })
-    //     .then((user) => {
-    //
-    //     })
-    //     .catch(function(err) {
-    //         res.setHeader("Content-Type", "application/json")
-    //         res.status(400).json({
-    //             code: 400,
-    //             message: "foo"
-    //         });
-    //     });
-// };
+ .catch(function(err) {
+  res.setHeader("Content-Type", "application/json");
+  res.status(400).json({
+   code: 400,
+   message: 'foo'
+  });
+  next(err);
+ });
+}
 
 function deleteUser(req, res, next) {
     Users.where('id', req.swagger.params.id)
