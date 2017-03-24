@@ -46,7 +46,6 @@ function addNewUser(req, res) {
 
 
 function deleteUser (req, res, next) {
-
   Users.where('id', req.swagger.params.id)
     .fetch({require: true})
     .then((user) => {
