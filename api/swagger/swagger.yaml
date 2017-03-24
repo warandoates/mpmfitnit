@@ -108,6 +108,7 @@ paths:
             $ref: "#/definitions/errorModel"
       x-swagger-router-controller: "users"
   /users/{id}:
+    x-swagger-router-controller: "users"
     get:
       description: "Returns a user information based on a single ID. The user must\
         \ be authorized to access."
@@ -142,8 +143,14 @@ paths:
         type: "integer"
         format: "int32"
       responses:
-        204:
+        400:
+          description: "You didn't make a user"
+          schema:
+            $ref: "#/definitions/errorModel"
+        200:
           description: "user deleted"
+          schema:
+            $ref: "#/definitions/user"
         default:
           description: "unexpected error"
           schema:
@@ -151,7 +158,7 @@ paths:
       x-swagger-router-controller: "users"
     patch:
       description: "updates specified properties of the specific user."
-      operationId: "patchUserProfile"
+      operationId: "updateUser"
       produces:
       - "application/json"
       parameters:
@@ -163,7 +170,7 @@ paths:
         format: "int64"
       - in: "body"
         name: "jsonPatch"
-        required: true
+        # required: false
         schema:
           $ref: "#/definitions/updateUser"
       responses:
@@ -175,7 +182,6 @@ paths:
           description: "unexpected error"
           schema:
             $ref: "#/definitions/errorModel"
-      x-swagger-router-controller: "users"
   /token:
     x-swagger-router-controller: "token"
     post:
@@ -435,14 +441,6 @@ definitions:
         type: "string"
   user:
     type: "object"
-    required:
-    - "email"
-    - "first_name"
-    - "id"
-    - "last_name"
-    # - "hashed_password"
-    - "weight"
-    - "user_intentions"
     properties:
       id:
         type: "integer"
@@ -453,8 +451,8 @@ definitions:
         type: "string"
       email:
         type: "string"
-      hashed_password:
-        type: "string"
+      # hashed_password:
+      #   type: "string"
       weight:
         type: "integer"
         format: "int32"
@@ -462,8 +460,8 @@ definitions:
         type: "string"
   updateUser:
     type: "object"
-    required:
-    - "password"
+    # required:
+    # - "password"
     properties:
       first_name:
         type: "string"
@@ -517,11 +515,11 @@ definitions:
   errorModel:
     type: "object"
     required:
-    - "code"
+    # - "code"
     - "message"
     properties:
-      code:
-        type: "integer"
-        format: "int32"
+      # code:
+      #   type: "integer"
+      #   format: "int32"
       message:
         type: "string"
