@@ -6,6 +6,7 @@
   "scripts": {
     "prestart": "npm install",
     "start": "node app.js",
+    "heroku-postbuild": "knex migrate:latest",
     "nodemon": "nodemon app.js",
     "test": "istanbul cover _mocha -- -R spec",
     "lint": "eslint"
