@@ -10,7 +10,7 @@ var app = express();
 const cors = require('cors');
 
 const path = require('path');
-app.use(express.static(path.join('public')));
+app.use(express.static(path.join('abc')));
 app.use(cors());
 
 var config = {
