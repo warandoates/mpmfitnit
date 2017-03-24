@@ -8,9 +8,10 @@ info:
   contact:
     name: "MPM FITNIT"
 host: "paolitaclo-routinegenerator.herokuapp.com"
-basePath: "/"
+basePath: "/api"
 schemes:
 - "http"
+- "https"
 consumes:
 - "application/json"
 produces:

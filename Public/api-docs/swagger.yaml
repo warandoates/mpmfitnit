@@ -7,10 +7,11 @@ info:
   title: "EpicLand API"
   contact:
     name: "MPM FITNIT"
-host: "https://paolitaclo-routinegenerator.herokuapp.com"
-basePath: "/"
+host: "paolitaclo-routinegenerator.herokuapp.com"
+basePath: "/api"
 schemes:
 - "http"
+- "https"
 consumes:
 - "application/json"
 produces:
