@@ -1,5 +1,5 @@
-module.exports = {
-  extends: [
-    'ryansobol/es6'
-  ]
-};
+// module.exports = {
+//   extends: [
+//     'ryansobol/es6'
+//   ]
+// };

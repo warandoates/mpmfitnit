@@ -469,8 +469,8 @@ definitions:
         type: "string"
       email:
         type: "string"
-      password:
-        type: "string"
+      # password:
+      #   type: "string"
       weight:
         type: "integer"
         format: "int32"
