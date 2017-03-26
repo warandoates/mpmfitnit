@@ -5,8 +5,13 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 var SwaggerExpress = require('swagger-express-mw');
-var app = require('express')();
+const express = require('express');
+var app = express();
+const cors = require('cors');
 
+const path = require('path');
+app.use(express.static(path.join('abc')));
+app.use(cors());
 
 var config = {
   appRoot: __dirname // required config

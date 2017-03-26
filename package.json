@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "prestart": "npm install",
+    "heroku-postbuild": "knex migrate:latest",
     "start": "node app.js",
     "nodemon": "nodemon app.js",
     "test": "istanbul cover _mocha -- -R spec",
@@ -20,6 +21,8 @@
     "bookshelf": "^0.10.3",
     "connect": "^3.2.0",
     "cookie-parser": "^1.4.3",
+    "cors": "^2.8.1",
+    "dotenv": "^4.0.0",
     "express": "^4.12.3",
     "express-validation": "^1.0.2",
     "humps": "^2.0.0",
@@ -31,7 +34,6 @@
     "morgan": "^1.8.1",
     "node-fetch": "^1.6.3",
     "pg": "^6.1.4",
-    "dotenv": "^4.0.0",
     "swagger-express-mw": "^0.1.0",
     "swagger-tools": "0.10.1"
   },
