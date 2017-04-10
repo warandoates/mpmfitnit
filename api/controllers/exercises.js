@@ -8,7 +8,7 @@ var url = require('url');
 
 
 module.exports.getAllExercises = function(req, res, next) {
-  Exercises.where('id', '<', '25').fetchAll({ withRelated: ['muscle', 'type', 'equipment'] })
+  Exercises.fetchAll({ withRelated: ['muscle', 'type', 'equipment'] })
   .then((exerciseList) => {
     res.setHeader('Content-Type', 'application/json');
     res.end(JSON.stringify(exerciseList));
